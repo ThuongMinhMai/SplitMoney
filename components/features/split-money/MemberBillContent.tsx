@@ -13,6 +13,24 @@ import {
   Wallet,
   CalendarDays,
   ArrowRight,
+  Coffee,
+  Utensils,
+  ShoppingBag,
+  Gift,
+  Home,
+  Car,
+  Film,
+  Smartphone,
+  Scissors,
+  Plane,
+  Droplets,
+  Zap,
+  QrCode,
+  Crown,
+  Users,
+  CheckCircle2,
+  RefreshCw,
+  Split,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -21,7 +39,29 @@ interface MemberBillContentProps {
   generatedAt?: string;
 }
 
-export function MemberBillContent({ data, generatedAt }: MemberBillContentProps) {
+// Icon mapping
+const getBillIcon = (billName: string) => {
+  const name = billName.toLowerCase();
+  if (name.includes("ăn") || name.includes("cơm") || name.includes("nhà hàng"))
+    return Utensils;
+  if (name.includes("cafe") || name.includes("trà")) return Coffee;
+  if (name.includes("mua") || name.includes("shop")) return ShoppingBag;
+  if (name.includes("quà") || name.includes("tặng")) return Gift;
+  if (name.includes("nhà") || name.includes("thuê")) return Home;
+  if (name.includes("xe") || name.includes("taxi")) return Car;
+  if (name.includes("phim") || name.includes("cinema")) return Film;
+  if (name.includes("điện") || name.includes("thoại")) return Smartphone;
+  if (name.includes("cắt") || name.includes("tóc")) return Scissors;
+  if (name.includes("máy") || name.includes("bay")) return Plane;
+  if (name.includes("nước") || name.includes("uống")) return Droplets;
+  if (name.includes("điện")) return Zap;
+  return Receipt;
+};
+
+export function MemberBillContent({
+  data,
+  generatedAt,
+}: MemberBillContentProps) {
   const totalPaid = data.billsPaid.reduce((sum, b) => sum + b.totalAmount, 0);
   const totalUsed = data.billsUsed.reduce((sum, b) => {
     const share = b.participantShares.find((s) => s.memberId === data.memberId);
@@ -29,6 +69,9 @@ export function MemberBillContent({ data, generatedAt }: MemberBillContentProps)
   }, 0);
   const balance = totalPaid - totalUsed;
   const isPositive = balance >= 0;
+
+  // SMART MERGE: Combine bills that appear in both lists
+  const mergedBills = mergeBills(data);
 
   const dateStr =
     generatedAt ||
@@ -41,357 +84,354 @@ export function MemberBillContent({ data, generatedAt }: MemberBillContentProps)
     });
 
   return (
-    <div className="w-full max-w-lg mx-auto font-sans select-text">
-      {/* ─── Header / Receipt Top ─── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 p-6 text-white shadow-xl">
-        {/* decorative circles */}
-        <div className="absolute -top-8 -right-8 h-32 w-32 rounded-full bg-white/10" />
-        <div className="absolute -bottom-6 -left-6 h-24 w-24 rounded-full bg-white/10" />
-
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 mb-4 opacity-80">
-            <Receipt className="h-4 w-4" />
-            <span className="text-xs font-medium tracking-widest uppercase">
-              Sao kê cá nhân
-            </span>
+    <div className="w-full max-w-md mx-auto font-mono">
+      <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800">
+        {/* Header */}
+        <div className="text-center pt-8 pb-4 border-b border-dashed border-zinc-200 dark:border-zinc-800">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900/30 mb-3">
+            <Receipt className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
           </div>
+          <h1 className="text-xl font-bold tracking-wide text-zinc-900 dark:text-zinc-100">
+            SPLIT MONEY
+          </h1>
+          <p className="text-[10px] text-zinc-400 tracking-wider mt-0.5">
+            TRANG WEB CHIA TIỀN THÔNG MINH
+          </p>
+        </div>
 
-          <div className="flex items-center gap-4">
-            <div className="shrink-0">
-              <Avatar name={data.memberName} size="lg" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold leading-tight">
+        {/* Customer Info */}
+        <div className="px-5 py-4 border-b border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
+          <div className="flex items-center gap-3">
+            <Avatar name={data.memberName} size="md" />
+            <div className="flex-1">
+              <p className="text-[10px] text-zinc-400 tracking-wide">
+                THÀNH VIÊN
+              </p>
+              <p className="font-bold text-zinc-900 dark:text-zinc-100">
                 {data.memberName}
-              </h1>
-              <div className="flex items-center gap-1.5 mt-1 text-emerald-100 text-xs">
-                <CalendarDays className="h-3 w-3" />
-                <span>{dateStr}</span>
-              </div>
+              </p>
             </div>
-          </div>
-
-          {/* Balance summary row */}
-          <div className="mt-5 grid grid-cols-3 gap-2">
-            <SummaryChip
-              label="Đã ứng"
-              value={formatMoneyFull(totalPaid)}
-              icon={<TrendingUp className="h-3.5 w-3.5" />}
-              color="emerald"
-            />
-            <SummaryChip
-              label="Đã dùng"
-              value={formatMoneyFull(totalUsed)}
-              icon={<TrendingDown className="h-3.5 w-3.5" />}
-              color="amber"
-            />
-            <SummaryChip
-              label={isPositive ? "Được nhận" : "Phải trả"}
-              value={formatMoneyFull(Math.abs(balance))}
-              icon={<Wallet className="h-3.5 w-3.5" />}
-              color={isPositive ? "sky" : "rose"}
-            />
+            <div className="text-right">
+              <p className="text-[10px] text-zinc-400">NGÀY</p>
+              <p className="text-xs font-mono text-zinc-700 dark:text-zinc-300">
+                {dateStr.split(",")[0]}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* ─── Dashed divider "receipt tear" ─── */}
-      <div className="flex items-center gap-1 px-2 -my-px">
-        <div className="h-4 w-4 rounded-full bg-background border border-border/60 shrink-0" />
-        <div className="flex-1 border-t-2 border-dashed border-border/50" />
-        <div className="h-4 w-4 rounded-full bg-background border border-border/60 shrink-0" />
-      </div>
+        {/* Balance Summary */}
+        <div className="px-5 py-4 border-b border-dashed border-zinc-200 dark:border-zinc-800">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="text-center">
+              <p className="text-[10px] text-zinc-400 uppercase">
+                Đã thanh toán
+              </p>
+              <p className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
+                {formatMoneyFull(totalPaid)}
+              </p>
+              <p className="text-[9px] text-zinc-400 mt-0.5">cho nhóm</p>
+            </div>
+            <div className="text-center">
+              <p className="text-[10px] text-zinc-400 uppercase">Đã sử dụng</p>
+              <p className="text-lg font-bold text-amber-600 dark:text-amber-400">
+                {formatMoneyFull(totalUsed)}
+              </p>
+              <p className="text-[9px] text-zinc-400 mt-0.5">từ nhóm</p>
+            </div>
+          </div>
 
-      {/* ─── Bills Paid ─── */}
-      {data.billsPaid.length > 0 && (
-        <section className="mt-3 px-1">
-          <SectionHeader
-            icon={<Receipt className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />}
-            title="Khoản đã trả thay"
-            count={data.billsPaid.length}
-            colorClass="text-emerald-600 dark:text-emerald-400"
-            bgClass="bg-emerald-50 dark:bg-emerald-900/20"
-          />
-          <div className="space-y-3 mt-3">
-            {data.billsPaid.map((bill) => (
-              <PaidBillCard
+          <div
+            className={cn(
+              "mt-4 p-3 rounded-lg text-center",
+              isPositive
+                ? "bg-emerald-50 dark:bg-emerald-950/30"
+                : "bg-rose-50 dark:bg-rose-950/30",
+            )}
+          >
+            <p className="text-[10px] uppercase tracking-wider text-zinc-500">
+              {isPositive ? "SỐ DƯ ĐƯỢC NHẬN" : "SỐ TIỀN CẦN THANH TOÁN"}
+            </p>
+            <p
+              className={cn(
+                "text-2xl font-bold mt-0.5",
+                isPositive
+                  ? "text-emerald-600 dark:text-emerald-400"
+                  : "text-rose-600 dark:text-rose-400",
+              )}
+            >
+              {formatMoneyFull(Math.abs(balance))}
+            </p>
+          </div>
+        </div>
+
+        {/* SMART BILLS SECTION - Merged view */}
+        <div className="px-5 py-3">
+          <div className="flex items-center gap-2 mb-3">
+            <RefreshCw className="h-3.5 w-3.5 text-purple-500" />
+            <p className="text-xs font-bold uppercase tracking-wide text-zinc-700 dark:text-zinc-300">
+              TẤT CẢ HÓA ĐƠN
+            </p>
+            <Badge className="ml-auto bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 text-[9px]">
+              {mergedBills.length} hóa đơn
+            </Badge>
+          </div>
+
+          <div className="space-y-4">
+            {mergedBills.map((bill) => (
+              <SmartBillCard
                 key={bill.billId}
                 bill={bill}
                 memberId={data.memberId}
               />
             ))}
           </div>
-        </section>
-      )}
-
-      {/* ─── Bills Used ─── */}
-      {data.billsUsed.length > 0 && (
-        <section className="mt-5 px-1">
-          <SectionHeader
-            icon={<User className="h-4 w-4 text-amber-600 dark:text-amber-400" />}
-            title="Khoản đã tham gia"
-            count={data.billsUsed.length}
-            colorClass="text-amber-600 dark:text-amber-400"
-            bgClass="bg-amber-50 dark:bg-amber-900/20"
-          />
-          <div className="space-y-3 mt-3">
-            {data.billsUsed.map((bill) => {
-              const share = bill.participantShares.find(
-                (s) => s.memberId === data.memberId
-              );
-              return (
-                <UsedBillCard
-                  key={bill.billId}
-                  bill={bill}
-                  memberId={data.memberId}
-                  myShare={share?.amount || 0}
-                />
-              );
-            })}
-          </div>
-        </section>
-      )}
-
-      {/* ─── Footer ─── */}
-      <div className="mt-5 px-1 mb-2">
-        <div
-          className={cn(
-            "rounded-xl p-4 flex items-center justify-between",
-            isPositive
-              ? "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/40"
-              : "bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800/40"
-          )}
-        >
-          <div>
-            <p className="text-xs text-muted-foreground font-medium">
-              Kết quả cuối cùng
-            </p>
-            <p
-              className={cn(
-                "text-base font-bold mt-0.5",
-                isPositive
-                  ? "text-emerald-700 dark:text-emerald-400"
-                  : "text-rose-700 dark:text-rose-400"
-              )}
-            >
-              {isPositive
-                ? `Được nhận lại ${formatMoneyFull(balance)}`
-                : `Cần chuyển ${formatMoneyFull(Math.abs(balance))}`}
-            </p>
-          </div>
-          <div
-            className={cn(
-              "rounded-full p-2",
-              isPositive
-                ? "bg-emerald-100 dark:bg-emerald-800/30"
-                : "bg-rose-100 dark:bg-rose-800/30"
-            )}
-          >
-            {isPositive ? (
-              <TrendingUp
-                className={cn(
-                  "h-5 w-5",
-                  "text-emerald-600 dark:text-emerald-400"
-                )}
-              />
-            ) : (
-              <ArrowRight className="h-5 w-5 text-rose-600 dark:text-rose-400" />
-            )}
-          </div>
         </div>
-        <p className="text-center text-[10px] text-muted-foreground mt-3 opacity-60 tracking-wide">
-          Split Money Pro • {dateStr}
-        </p>
+
+        {/* Footer */}
+        <div className="px-5 py-4 text-center border-t border-dashed border-zinc-200 dark:border-zinc-800">
+          <div className="flex justify-center gap-1 mb-3">
+            <div className="w-8 h-8 bg-zinc-100 dark:bg-zinc-800 rounded flex items-center justify-center">
+              <QrCode className="h-4 w-4 text-zinc-400" />
+            </div>
+          </div>
+          <p className="text-[8px] text-zinc-400 mt-1">
+            Hóa đơn được tạo tự động bởi Split Money Pro
+          </p>
+        </div>
       </div>
     </div>
   );
 }
 
-/* ── Sub-components ── */
-
-function SummaryChip({
-  label,
-  value,
-  icon,
-  color,
-}: {
-  label: string;
-  value: string;
-  icon: React.ReactNode;
-  color: "emerald" | "amber" | "sky" | "rose";
-}) {
-  const colorMap = {
-    emerald: "bg-emerald-500/20 text-emerald-100",
-    amber: "bg-amber-500/20 text-amber-100",
-    sky: "bg-sky-500/20 text-sky-100",
-    rose: "bg-rose-500/20 text-rose-100",
-  };
-  return (
-    <div className={cn("rounded-xl p-2.5 text-center", colorMap[color])}>
-      <div className="flex justify-center mb-1 opacity-80">{icon}</div>
-      <p className="text-[10px] opacity-70 mb-0.5">{label}</p>
-      <p className="text-[11px] font-bold leading-tight break-all">{value}</p>
-    </div>
-  );
-}
-
-function SectionHeader({
-  icon,
-  title,
-  count,
-  colorClass,
-  bgClass,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  count: number;
-  colorClass: string;
-  bgClass: string;
-}) {
-  return (
-    <div className="flex items-center gap-2">
-      <div className={cn("rounded-lg p-1.5", bgClass)}>{icon}</div>
-      <span className={cn("text-sm font-semibold", colorClass)}>{title}</span>
-      <span className="ml-auto text-[11px] text-muted-foreground bg-muted rounded-full px-2 py-0.5">
-        {count}
-      </span>
-    </div>
-  );
-}
-
-function PaidBillCard({
+// SMART BILL CARD - Hiển thị thông minh theo vai trò
+function SmartBillCard({
   bill,
   memberId,
 }: {
-  bill: MemberBillDetail["billsPaid"][0];
+  bill: SmartBill;
   memberId: string;
 }) {
-  return (
-    <div className="rounded-xl border border-emerald-100 dark:border-emerald-900/30 bg-card overflow-hidden shadow-sm">
-      {/* top stripe */}
-      <div className="h-1 bg-gradient-to-r from-emerald-400 to-teal-400" />
-      <div className="p-3">
-        <div className="flex items-start justify-between mb-2.5">
-          <div>
-            <p className="font-semibold text-sm leading-tight">{bill.billName}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Tổng:{" "}
-              <span className="font-mono font-medium">
-                {formatMoneyFull(bill.totalAmount)}
-              </span>
-            </p>
-          </div>
-          <Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border-none text-[10px] shrink-0">
-            Trả thay
-          </Badge>
-        </div>
+  const BillIcon = getBillIcon(bill.billName);
+  const isPayer = bill.paidBy === memberId;
+  const myShare =
+    bill.participantShares.find((s) => s.memberId === memberId)?.amount || 0;
+  const isSettled = isPayer && myShare === bill.totalAmount; // Trả full, không cần ai trả lại
 
-        <div className="border-t pt-2 space-y-1">
-          <p className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium mb-1.5">
-            Phân bổ
+  // Tính toán trạng thái
+  let roleIcon = null;
+  let roleText = "";
+  let roleColor = "";
+
+  if (
+    isPayer &&
+    bill.participantShares.length > 1 &&
+    myShare < bill.totalAmount
+  ) {
+    // Vừa trả vừa tham gia (phổ biến)
+    roleIcon = <Split className="h-3 w-3" />;
+    roleText = "Bạn trả thay - Đã bao gồm phần của bạn";
+    roleColor = "text-purple-600 dark:text-purple-400";
+  } else if (isPayer && myShare === bill.totalAmount) {
+    // Trả full, không dùng
+    roleIcon = <Crown className="h-3 w-3" />;
+    roleText = "Bạn trả toàn bộ - Miễn phần của bạn";
+    roleColor = "text-emerald-600 dark:text-emerald-400";
+  } else if (isPayer) {
+    // Chỉ trả, không dùng
+    roleIcon = <UserCheck className="h-3 w-3" />;
+    roleText = "Bạn trả thay - Không tham gia";
+    roleColor = "text-emerald-600 dark:text-emerald-400";
+  } else {
+    // Chỉ tham gia
+    roleIcon = <User className="h-3 w-3" />;
+    roleText = `Bạn tham gia - Người trả: ${bill.paidByName}`;
+    roleColor = "text-amber-600 dark:text-amber-400";
+  }
+
+  return (
+    <div className="border rounded-xl border-zinc-200 dark:border-zinc-700 overflow-hidden bg-white dark:bg-zinc-900/50 shadow-sm hover:shadow-md transition-all">
+      {/* Header */}
+      <div className="p-3 pb-2 border-b border-dashed border-zinc-100 dark:border-zinc-800">
+        <div className="flex items-start justify-between">
+          <div className="flex items-center gap-2 flex-1">
+            <BillIcon className="h-4 w-4 text-zinc-500 shrink-0" />
+            <div>
+              <p className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
+                {bill.billName}
+              </p>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <div
+                  className={cn(
+                    "flex items-center gap-1 text-[9px]",
+                    roleColor,
+                  )}
+                >
+                  {roleIcon}
+                  <span className="tracking-tight">{roleText}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="text-sm font-bold font-mono text-zinc-900 dark:text-zinc-100">
+            {formatMoneyFull(bill.totalAmount)}
+          </p>
+        </div>
+      </div>
+
+      {/* Body - Show participant breakdown with visual indicator */}
+      <div className="p-3">
+        {/* Your share highlight (if any) */}
+        {myShare > 0 && (
+          <div
+            className={cn(
+              "mb-2 p-2 rounded-lg text-[11px] flex justify-between items-center",
+              isPayer
+                ? "bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/30"
+                : "bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/30",
+            )}
+          >
+            <span className="flex items-center gap-1.5">
+              {isPayer ? (
+                <CheckCircle2 className="h-3 w-3 text-emerald-600" />
+              ) : (
+                <Wallet className="h-3 w-3 text-amber-600" />
+              )}
+              <span className="font-medium">
+                {isPayer ? "Phần của bạn (đã trả)" : "Phần của bạn (cần trả)"}
+              </span>
+            </span>
+            <span className="font-mono font-bold">
+              {formatMoneyFull(myShare)}
+            </span>
+          </div>
+        )}
+
+        {/* All participants */}
+        <div className="space-y-1.5">
+          <p className="text-[9px] text-zinc-400 uppercase tracking-wider flex items-center gap-1">
+            <Users className="h-2.5 w-2.5" />
+            THAM GIA ({bill.participantShares.length} người)
           </p>
           {bill.participantShares.map((share) => {
             const isSelf = share.memberId === memberId;
+            const isPayerOfBill = share.memberId === bill.paidBy;
+
             return (
               <div
                 key={share.memberId}
                 className={cn(
-                  "flex justify-between items-center text-[12px] py-1 px-2 rounded-lg transition-colors",
-                  isSelf
-                    ? "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/30 font-semibold"
-                    : "text-muted-foreground"
+                  "flex justify-between items-center text-[10px] py-1 px-1.5 rounded transition-colors",
+                  isSelf && "bg-purple-50 dark:bg-purple-950/20",
                 )}
               >
-                <span className="flex items-center gap-1.5">
-                  {isSelf ? (
-                    <UserCheck className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
-                  ) : (
-                    <User className="h-3 w-3 opacity-50" />
-                  )}
-                  <span className="truncate max-w-[120px]">
-                    {share.memberName}
+                <div className="flex items-center gap-1.5">
+                  <span
+                    className={cn(
+                      "w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold",
+                      isSelf
+                        ? "bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200"
+                        : isPayerOfBill
+                          ? "bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-200"
+                          : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400",
+                    )}
+                  >
+                    {isSelf ? "B" : share.memberName.charAt(0)}
                   </span>
-                  {isSelf && (
-                    <span className="text-[9px] bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-300 px-1 rounded uppercase tracking-tight">
-                      bạn
-                    </span>
-                  )}
-                </span>
-                <span
-                  className={cn(
-                    "font-mono",
-                    isSelf
-                      ? "text-emerald-700 dark:text-emerald-400"
-                      : "opacity-70"
-                  )}
-                >
+                  <span
+                    className={cn(
+                      "truncate max-w-[120px]",
+                      isSelf &&
+                        "font-semibold text-purple-700 dark:text-purple-300",
+                    )}
+                  >
+                    {share.memberName}
+                    {isSelf && " (bạn)"}
+                    {isPayerOfBill && !isSelf && " (người trả)"}
+                  </span>
+                </div>
+                <span className="font-mono text-[10px]">
                   {formatMoneyFull(share.amount)}
                 </span>
               </div>
             );
           })}
         </div>
-      </div>
-    </div>
-  );
-}
 
-function UsedBillCard({
-  bill,
-  memberId,
-  myShare,
-}: {
-  bill: MemberBillDetail["billsUsed"][0];
-  memberId: string;
-  myShare: number;
-}) {
-  const isSelfPayer = bill.paidBy === memberId;
-
-  return (
-    <div className="rounded-xl border border-amber-100 dark:border-amber-900/30 bg-card overflow-hidden shadow-sm">
-      {/* top stripe */}
-      <div className="h-1 bg-gradient-to-r from-amber-400 to-orange-400" />
-      <div className="p-3">
-        <div className="flex items-start justify-between mb-2">
-          <div>
-            <p className="font-semibold text-sm leading-tight">{bill.billName}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Người trả:{" "}
-              <span className="font-medium text-foreground">
-                {bill.paidByName}
-                {isSelfPayer && (
-                  <span className="ml-1 text-emerald-600 dark:text-emerald-400 text-[11px]">
-                    (bạn)
-                  </span>
-                )}
+        {/* Net effect summary */}
+        <div className="mt-2 pt-2 border-t border-dashed border-zinc-100 dark:border-zinc-800 text-[9px]">
+          {isPayer && myShare < bill.totalAmount && (
+            <div className="flex justify-between text-emerald-700 dark:text-emerald-400">
+              <span>↻ Người khác trả lại bạn:</span>
+              <span className="font-mono">
+                {formatMoneyFull(bill.totalAmount - myShare)}
               </span>
-            </p>
-          </div>
-          <Badge
-            variant="outline"
-            className="text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-700/40 text-[10px] shrink-0"
-          >
-            Đã dùng
-          </Badge>
-        </div>
-
-        <div className="border-t pt-2">
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-muted-foreground">Phần của bạn</span>
-            <span className="font-mono font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-2 py-0.5 rounded-lg text-sm">
-              {formatMoneyFull(myShare)}
-            </span>
-          </div>
-          {isSelfPayer && (
-            <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-dashed">
-              <UserCheck className="h-3 w-3 text-muted-foreground" />
-              <p className="text-[11px] text-muted-foreground">
-                Bạn đã trả khoản này, không cần chuyển tiền
-              </p>
+            </div>
+          )}
+          {!isPayer && myShare > 0 && (
+            <div className="flex justify-between text-amber-700 dark:text-amber-400">
+              <span>→ Bạn cần trả:</span>
+              <span className="font-mono">{formatMoneyFull(myShare)}</span>
             </div>
           )}
         </div>
       </div>
     </div>
   );
+}
+// Types
+interface SmartBill {
+  billId: string;
+  billName: string;
+  totalAmount: number;
+  paidBy: string;
+  paidByName: string;
+  participantShares: {
+    memberId: string;
+    memberName: string;
+    amount: number;
+  }[];
+}
+
+// MERGE FUNCTION: Gộp các bill trùng nhau
+function mergeBills(data: MemberBillDetail): SmartBill[] {
+  const billMap = new Map<string, SmartBill>();
+
+  // Thêm billsPaid vào map
+  for (const bill of data.billsPaid) {
+    billMap.set(bill.billId, {
+      billId: bill.billId,
+      billName: bill.billName,
+      totalAmount: bill.totalAmount,
+      paidBy: bill.paidBy,
+      paidByName: bill.paidByName,
+      participantShares: [...bill.participantShares],
+    });
+  }
+
+  // Merge billsUsed (nếu đã có trong map thì bổ sung, nếu chưa thì thêm)
+  for (const bill of data.billsUsed) {
+    if (billMap.has(bill.billId)) {
+      const existing = billMap.get(bill.billId)!;
+      // Gộp participantShares (ưu tiên giữ lại dữ liệu từ billsPaid vì đã đầy đủ)
+      // Chỉ cập nhật nếu billsUsed có thông tin chia sẻ chi tiết hơn
+      if (
+        existing.participantShares.length === 0 &&
+        bill.participantShares.length > 0
+      ) {
+        existing.participantShares = bill.participantShares;
+      }
+    } else {
+      billMap.set(bill.billId, {
+        billId: bill.billId,
+        billName: bill.billName,
+        totalAmount: bill.totalAmount,
+        paidBy: bill.paidBy,
+        paidByName: bill.paidByName,
+        participantShares: bill.participantShares,
+      });
+    }
+  }
+
+  return Array.from(billMap.values());
 }

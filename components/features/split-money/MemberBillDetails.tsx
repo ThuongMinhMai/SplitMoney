@@ -34,9 +34,9 @@ export function MemberBillDetails({ members, bills }: MemberBillDetailsProps) {
           <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
             <TrendingUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          {t('details.title')}
+          {t("details.title")}
           <Badge className="ml-auto bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 border-none">
-            {members.length} {t('details.memberCount')}
+            {members.length} {t("details.memberCount")}
           </Badge>
         </CardTitle>
       </CardHeader>
