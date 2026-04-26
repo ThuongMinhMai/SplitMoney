@@ -12,7 +12,8 @@ import { cn } from "@/lib/utils";
 import { Avatar } from "./Avatar";
 import { formatMoney } from "./utils";
 import type { MemberSummary } from "./types";
-import { CardCustom } from "../ui/card-custom";
+import { CardCustom } from "@/components/ui/card-custom";
+import { useI18n } from "@/context/i18n-context";
 
 interface SummaryCardProps {
   summaries: MemberSummary[];
@@ -20,21 +21,22 @@ interface SummaryCardProps {
 }
 
 export function SummaryCard({ summaries, hasBills }: SummaryCardProps) {
+  const { t } = useI18n();
   return (
     <CardCustom className="shadow-sm hover:shadow-md transition-all">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-          <div className="p-1 rounded-lg bg-emerald-100">
-            <BarChart3 className="h-4 w-4 text-emerald-600" />
+          <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
+            <BarChart3 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          Sao kê từng người
+          {t('summary.title')}
         </CardTitle>
       </CardHeader>
       <CardContent>
         {!hasBills || summaries.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground text-sm space-y-1">
             <TrendingUp className="h-10 w-10 mx-auto opacity-30 mb-2" />
-            <p>Thêm khoản chi để xem sao kê</p>
+            <p>{t('summary.addHint')}</p>
           </div>
         ) : (
           <div className="overflow-x-auto -mx-1">
@@ -42,16 +44,16 @@ export function SummaryCard({ summaries, hasBills }: SummaryCardProps) {
               <TableHeader>
                 <TableRow className="hover:bg-transparent border-b-2">
                   <TableHead className="text-xs font-semibold">
-                    Thành viên
+                    {t('common.members')}
                   </TableHead>
                   <TableHead className="text-xs text-right font-semibold">
-                    Đã chi
+                    {t('summary.paid')}
                   </TableHead>
                   <TableHead className="text-xs text-right font-semibold">
-                    Đã dùng
+                    {t('summary.used')}
                   </TableHead>
                   <TableHead className="text-xs text-right font-semibold">
-                    Chênh lệch
+                    {t('summary.balance')}
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -75,8 +77,8 @@ export function SummaryCard({ summaries, hasBills }: SummaryCardProps) {
                         className={cn(
                           "font-mono font-bold text-sm px-2 py-0.5 rounded-full",
                           s.balance >= 0
-                            ? "text-emerald-700 bg-emerald-50"
-                            : "text-rose-600 bg-rose-50",
+                            ? "text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10"
+                            : "text-rose-600 bg-rose-50 dark:text-rose-400 dark:bg-rose-500/10",
                         )}
                       >
                         {s.balance >= 0 ? "+" : ""}

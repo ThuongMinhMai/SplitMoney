@@ -1,0 +1,99 @@
+{
+  "common": {
+    "appName": "Split Money Pro",
+    "tagline": "Chúng ta chả biết gì",
+    "addBill": "Thêm khoản chi",
+    "cancel": "Huỷ",
+    "confirm": "Xác nhận",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "back": "Quay lại",
+    "totalSpent": "Tổng chi",
+    "members": "Thành viên",
+    "bills": "Khoản chi",
+    "overview": "Tổng quan",
+    "settle": "Quyết toán",
+    "success": "Thành công",
+    "error": "Lỗi",
+    "confirmDelete": "Xác nhận xóa?",
+    "confirmExit": "Rời khỏi form?",
+    "unsavedChanges": "Bạn đang nhập dở dữ liệu. Nếu rời đi, các thông tin đã nhập sẽ bị mất.",
+    "deleteConfirmDesc": "Hành động này không thể hoàn tác. Dữ liệu sẽ bị xóa vĩnh viễn khỏi hệ thống.",
+    "member": "người"
+  },
+  "members": {
+    "title": "Thành viên",
+    "placeholder": "Nhập tên thành viên...",
+    "noMembers": "Chưa có thành viên nào",
+    "addHint": "Thêm thành viên để bắt đầu",
+    "alreadyExists": "Thành viên đã tồn tại",
+    "added": "Đã thêm vào nhóm",
+    "removed": "Đã xóa khỏi nhóm",
+    "error": {
+      "nameMin": "Tên phải có ít nhất 2 ký tự",
+      "nameMax": "Tên quá dài"
+    }
+  },
+  "bills": {
+    "error": {
+      "nameRequired": "Vui lòng nhập tên khoản chi",
+      "amountPositive": "Số tiền phải lớn hơn 0",
+      "payerRequired": "Vui lòng chọn người trả",
+      "participantsRequired": "Vui lòng chọn ít nhất một người tham gia",
+      "totalDiff": "Tổng số tiền các thành viên đóng góp phải bằng tổng giá trị hóa đơn"
+    },
+    "title": "Thêm khoản chi mới",
+    "noBills": "Chưa có khoản chi nào",
+    "addHint": "Thêm khoản chi để bắt đầu",
+    "name": "Tên khoản chi",
+    "namePlaceholder": "VD: Ăn tối nhà hàng, Cafe, Taxi...",
+    "totalAmount": "Tổng tiền (VNĐ)",
+    "paidBy": "Người trả trước",
+    "selectPayer": "Chọn người trả",
+    "participants": "Người tham gia",
+    "splitType": "Cách chia tiền",
+    "splitEqual": "Chia đều",
+    "splitCustom": "Chênh lệch",
+    "added": "Đã thêm khoản chi",
+    "removed": "Đã xóa khoản chi",
+    "paid": "Đã trả",
+    "used": "Đã dùng",
+    "selfPaid": "Tự trả",
+    "selfUsed": "Tự dùng",
+    "shareFor": "Phân bổ cho",
+    "total": "Tổng",
+    "you": "Bạn",
+    "mustPay": "Số tiền phải trả",
+    "alreadyPaidHint": "Bạn đã trả khoản này, không cần chuyển tiền"
+  },
+  "summary": {
+    "title": "Sao kê từng người",
+    "addHint": "Thêm khoản chi để xem sao kê",
+    "paid": "Đã chi",
+    "used": "Đã dùng",
+    "balance": "Chênh lệch",
+    "owes": "Phải trả",
+    "owed": "Được nhận"
+  },
+  "transactions": {
+    "title": "Giao dịch",
+    "noTransactions": "Không có giao dịch nào cần thực hiện",
+    "allSettled": "Mọi người đã hòa vốn",
+    "pays": "trả cho",
+    "completed": "Đã xong",
+    "count": "giao dịch"
+  },
+  "details": {
+    "title": "Chi tiết từng người",
+    "memberCount": "thành viên",
+    "paidItems": "Khoản đã trả",
+    "usedItems": "Khoản đã sử dụng",
+    "selfPaid": "Tự trả",
+    "selfUsed": "Tự dùng",
+    "shareFor": "Phân bổ cho",
+    "you": "Bạn",
+    "paidAmount": "Số tiền đã trả",
+    "mustPay": "Số tiền phải trả",
+    "alreadyPaidHint": "Bạn đã trả khoản này, không cần chuyển tiền"
+  }
+}

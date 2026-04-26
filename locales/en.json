@@ -1,0 +1,99 @@
+{
+  "common": {
+    "appName": "Split Money Pro",
+    "tagline": "We know nothing",
+    "addBill": "Add Bill",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "back": "Back",
+    "totalSpent": "Total Spent",
+    "members": "Members",
+    "bills": "Bills",
+    "overview": "Overview",
+    "settle": "Settle",
+    "success": "Success",
+    "error": "Error",
+    "confirmDelete": "Confirm Delete?",
+    "confirmExit": "Exit form?",
+    "unsavedChanges": "You have unsaved changes. If you leave, your data will be lost.",
+    "deleteConfirmDesc": "This action cannot be undone. This data will be permanently deleted.",
+    "member": "member"
+  },
+  "members": {
+    "title": "Members",
+    "placeholder": "Enter member name...",
+    "noMembers": "No members yet",
+    "addHint": "Add members to start",
+    "alreadyExists": "Member already exists",
+    "added": "Added to group",
+    "removed": "Removed from group",
+    "error": {
+      "nameMin": "Name must be at least 2 characters",
+      "nameMax": "Name is too long"
+    }
+  },
+  "bills": {
+    "error": {
+      "nameRequired": "Please enter bill name",
+      "amountPositive": "Amount must be greater than 0",
+      "payerRequired": "Please select a payer",
+      "participantsRequired": "Please select at least one participant",
+      "totalDiff": "Sum of participant shares must equal total amount"
+    },
+    "title": "Add New Bill",
+    "noBills": "No bills yet",
+    "addHint": "Add a bill to start",
+    "name": "Bill Name",
+    "namePlaceholder": "e.g. Dinner, Cafe, Taxi...",
+    "totalAmount": "Total Amount (USD)",
+    "paidBy": "Paid by",
+    "selectPayer": "Select payer",
+    "participants": "Participants",
+    "splitType": "Split Type",
+    "splitEqual": "Equal",
+    "splitCustom": "Custom",
+    "added": "Bill added",
+    "removed": "Bill removed",
+    "paid": "Paid",
+    "used": "Used",
+    "selfPaid": "Self Paid",
+    "selfUsed": "Self Used",
+    "shareFor": "Share for",
+    "total": "Total",
+    "you": "You",
+    "mustPay": "Amount to Pay",
+    "alreadyPaidHint": "You already paid for this, no need to transfer"
+  },
+  "summary": {
+    "title": "Member Summaries",
+    "addHint": "Add a bill to see summaries",
+    "paid": "Paid",
+    "used": "Used",
+    "balance": "Balance",
+    "owes": "Owes",
+    "owed": "Owed"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "noTransactions": "No transactions needed",
+    "allSettled": "Everyone is settled",
+    "pays": "pays",
+    "completed": "Completed",
+    "count": "transactions"
+  },
+  "details": {
+    "title": "Member Details",
+    "memberCount": "members",
+    "paidItems": "Bills Paid",
+    "usedItems": "Bills Used",
+    "selfPaid": "Self Paid",
+    "selfUsed": "Self Used",
+    "shareFor": "Share for",
+    "you": "You",
+    "paidAmount": "Amount Paid",
+    "mustPay": "Amount to Pay",
+    "alreadyPaidHint": "You already paid for this, no need to transfer"
+  }
+}

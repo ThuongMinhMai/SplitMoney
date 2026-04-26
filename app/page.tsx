@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -11,104 +11,87 @@ import {
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Banknote, Plus, ReceiptText, UserRound, Wallet } from "lucide-react";
-import { Avatar } from "@/components/split-money/Avatar";
-import { StatCard } from "@/components/split-money/StatCard";
-import { AddBillForm } from "@/components/split-money/AddBillForm";
-import { MembersCard } from "@/components/split-money/MembersCard";
-import { BillsCard } from "@/components/split-money/BillsCard";
-import { SummaryCard } from "@/components/split-money/SummaryCard";
-import { TransactionsCard } from "@/components/split-money/TransactionsCard";
-import { uid, formatMoney } from "@/components/split-money/utils";
+import { Avatar } from "@/components/features/split-money/Avatar";
+import { StatCard } from "@/components/features/split-money/StatCard";
+import { AddBillForm } from "@/components/features/split-money/AddBillForm";
+import { MembersCard } from "@/components/features/split-money/MembersCard";
+import { BillsCard } from "@/components/features/split-money/BillsCard";
+import { SummaryCard } from "@/components/features/split-money/SummaryCard";
+import { TransactionsCard } from "@/components/features/split-money/TransactionsCard";
+import { uid, formatMoney } from "@/components/features/split-money/utils";
 import type {
   Member,
   Bill,
   Transaction,
   MemberSummary,
-} from "@/components/split-money/types";
-import { MemberBillDetails } from "@/components/split-money/MemberBillDetails";
+} from "@/components/features/split-money/types";
+import { MemberBillDetails } from "@/components/features/split-money/MemberBillDetails";
 import Image from "next/image";
+import { useSplitMoney } from "@/hooks/use-split-money";
+import { useI18n } from "@/context/i18n-context";
+import { ThemeToggle, LanguageToggle } from "@/components/settings-toggles";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
 export default function Home() {
-  const [members, setMembers] = useState<Member[]>([]);
-  const [bills, setBills] = useState<Bill[]>([]);
+  const {
+    members,
+    bills,
+    addMember,
+    removeMember,
+    addBill,
+    removeBill,
+    summaries,
+    transactions,
+    totalSpent,
+  } = useSplitMoney();
+
+  const { t } = useI18n();
+
   const [newMemberName, setNewMemberName] = useState("");
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const addMember = useCallback(() => {
-    const name = newMemberName.trim();
-    if (!name) return;
-    setMembers((prev) => [...prev, { id: uid(), name }]);
-    setNewMemberName("");
-  }, [newMemberName]);
+  const [isFormDirty, setIsFormDirty] = useState(false);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const isSubmittingRef = useRef(false);
 
-  const removeMember = useCallback((id: string) => {
-    setMembers((prev) => prev.filter((m) => m.id !== id));
-    setBills((prev) =>
-      prev.filter((b) => b.paidBy !== id && !b.participants.includes(id)),
-    );
-  }, []);
-
-  const addBill = useCallback((billData: Omit<Bill, "id">) => {
-    setBills((prev) => [...prev, { ...billData, id: uid() }]);
-  }, []);
-
-  const removeBill = useCallback((id: string) => {
-    setBills((prev) => prev.filter((b) => b.id !== id));
-  }, []);
-
-  const getSummaries = useCallback((): MemberSummary[] => {
-    const map: Record<string, MemberSummary> = {};
-    members.forEach((m) => {
-      map[m.id] = { id: m.id, name: m.name, paid: 0, used: 0, balance: 0 };
-    });
-    bills.forEach((b) => {
-      if (map[b.paidBy]) map[b.paidBy].paid += b.totalAmount;
-      b.participants.forEach((pid) => {
-        if (!map[pid]) return;
-        const amt =
-          b.splitType === "equal"
-            ? b.totalAmount / b.participants.length
-            : (b.customAmounts[pid] ?? 0);
-        map[pid].used += amt;
-      });
-    });
-    members.forEach((m) => {
-      map[m.id].balance = map[m.id].paid - map[m.id].used;
-    });
-    return Object.values(map);
-  }, [members, bills]);
-
-  const getTransactions = useCallback((): Transaction[] => {
-    const sums = getSummaries();
-    const debtors = sums
-      .filter((s) => s.balance < -0.5)
-      .sort((a, b) => a.balance - b.balance)
-      .map((s) => ({ ...s }));
-    const creditors = sums
-      .filter((s) => s.balance > 0.5)
-      .sort((a, b) => b.balance - a.balance)
-      .map((s) => ({ ...s }));
-    const txs: Transaction[] = [];
-    let i = 0,
-      j = 0;
-    while (i < debtors.length && j < creditors.length) {
-      const d = debtors[i],
-        c = creditors[j];
-      const amt = Math.min(-d.balance, c.balance);
-      if (amt > 0.5) txs.push({ from: d.name, to: c.name, amount: amt });
-      d.balance += amt;
-      c.balance -= amt;
-      if (Math.abs(d.balance) < 0.5) i++;
-      if (Math.abs(c.balance) < 0.5) j++;
+  const handleSheetOpenChange = (open: boolean) => {
+    if (!open && isFormDirty && !isSubmittingRef.current) {
+      setShowExitConfirm(true);
+      return;
     }
-    return txs;
-  }, [getSummaries]);
+    setIsSheetOpen(open);
+    if (!open) {
+      setIsFormDirty(false);
+      isSubmittingRef.current = false;
+    }
+  };
 
-  const summaries = getSummaries();
-  const transactions = getTransactions();
-  const totalSpent = bills.reduce((a, b) => a + b.totalAmount, 0);
+  const handleAddMember = useCallback(() => {
+    addMember(newMemberName);
+    setNewMemberName("");
+  }, [addMember, newMemberName]);
+
+  const handleAddBill = useCallback(
+    (billData: Omit<Bill, "id">) => {
+      isSubmittingRef.current = true;
+      addBill(billData);
+      setIsFormDirty(false);
+      setIsSheetOpen(false);
+    },
+    [addBill],
+  );
 
   return (
     <div className="min-h-screen ">
-      <header className="sticky top-0 z-40 border-b backdrop-blur-md shadow-sm">
+      <header className="fixed top-0 left-0 right-0 z-40 border-b backdrop-blur-md shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 relative rounded-xl overflow-hidden shadow-md">
@@ -117,15 +100,21 @@ export default function Home() {
 
             <div>
               <span className="font-bold text-base leading-none tracking-tight bg-gradient-to-r from-emerald-600 to-emerald-800 bg-clip-text text-transparent">
-                Split Money Pro
+                {t("common.appName")}
               </span>
               <p className="text-[10px] text-muted-foreground leading-none mt-1 hidden sm:block">
-                Chúng ta chả biết gì
+                {t("common.tagline")}
               </p>
             </div>
           </div>
 
-          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+          <div className="flex items-center gap-1 sm:gap-2 ml-auto">
+            <LanguageToggle />
+            <ThemeToggle />
+            <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
+          </div>
+
+          <Sheet open={isSheetOpen} onOpenChange={handleSheetOpenChange}>
             <SheetTrigger asChild>
               <Button
                 size="default"
@@ -133,68 +122,75 @@ export default function Home() {
                 disabled={members.length < 2}
               >
                 <Plus className="h-4 w-4" />
-                <span className="hidden xs:inline">Thêm khoản chi</span>
-                <span className="xs:hidden">Thêm</span>
+                <span className="hidden xs:inline">{t("common.addBill")}</span>
+                <span className="xs:hidden">{t("common.addBill")}</span>
               </Button>
             </SheetTrigger>
             <SheetContent
               side="bottom"
-              className="rounded-t-2xl max-h-[92dvh] overflow-y-auto p-4 pb-safe bg-white border-t-4 border-t-emerald-500"
+              className="rounded-t-2xl max-h-[92dvh] overflow-y-auto p-4 pb-safe bg-background border-t-4 border-t-emerald-500"
+              onPointerDownOutside={(e) => {
+                if (isFormDirty) e.preventDefault();
+              }}
+              onEscapeKeyDown={(e) => {
+                if (isFormDirty) e.preventDefault();
+              }}
             >
               <SheetHeader className="mb-5">
                 <SheetTitle className="text-left text-xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-800 bg-clip-text text-transparent">
-                  Thêm khoản chi mới
+                  {t("bills.title")}
                 </SheetTitle>
               </SheetHeader>
               <AddBillForm
                 members={members}
-                onAdd={addBill}
-                onClose={() => setIsSheetOpen(false)}
+                onAdd={handleAddBill}
+                onClose={() => handleSheetOpenChange(false)}
+                onDirtyChange={setIsFormDirty}
               />
             </SheetContent>
           </Sheet>
         </div>
       </header>
 
-      <main className="max-w-6xl  mx-auto px-4 sm:px-6 py-6 pb-20">
-        <div className="grid grid-cols-3 gap-4 mb-6">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
           <StatCard
-            label="Tổng chi"
+            label={t("common.totalSpent")}
             value={formatMoney(totalSpent)}
-            valueClass="text-emerald-700"
-            icon={<Banknote className="h-6 w-6" />}
+            valueClass="text-emerald-700 dark:text-emerald-400"
+            icon={<Banknote className="h-5 w-5" />}
           />
           <StatCard
-            label="Thành viên"
+            label={t("common.members")}
             value={String(members.length)}
             icon={<UserRound className="h-6 w-6" />}
           />
           <StatCard
-            label="Khoản chi"
+            label={t("common.bills")}
             value={String(bills.length)}
             icon={<ReceiptText className="h-6 w-6" />}
           />
         </div>
         <div className="lg:hidden">
           <Tabs defaultValue="overview" className="w-full flex flex-col">
-            <TabsList className="w-full grid grid-cols-3 mb-5 h-11 bg-muted/50 p-1">
+            <TabsList className="w-full grid grid-cols-3 mb-5 h-11 bg-muted/50 p-1 border border-border/50">
               <TabsTrigger
                 value="overview"
-                className="text-xs gap-2 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                className="text-xs gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm"
               >
-                Tổng quan
+                {t("common.overview")}
               </TabsTrigger>
               <TabsTrigger
                 value="bills"
-                className="text-xs gap-2 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                className="text-xs gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm"
               >
-                Khoản chi
+                {t("common.bills")}
               </TabsTrigger>
               <TabsTrigger
                 value="settle"
-                className="text-xs gap-2 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                className="text-xs gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm"
               >
-                Quyết toán
+                {t("common.settle")}
               </TabsTrigger>
             </TabsList>
 
@@ -203,7 +199,7 @@ export default function Home() {
                 members={members}
                 newMemberName={newMemberName}
                 setNewMemberName={setNewMemberName}
-                onAdd={addMember}
+                onAdd={handleAddMember}
                 onRemove={removeMember}
               />
               <SummaryCard summaries={summaries} hasBills={bills.length > 0} />
@@ -229,7 +225,7 @@ export default function Home() {
               members={members}
               newMemberName={newMemberName}
               setNewMemberName={setNewMemberName}
-              onAdd={addMember}
+              onAdd={handleAddMember}
               onRemove={removeMember}
             />
             <BillsCard bills={bills} members={members} onRemove={removeBill} />
@@ -244,6 +240,30 @@ export default function Home() {
           <MemberBillDetails members={members} bills={bills} />
         </div>
       </main>
+
+      <AlertDialog open={showExitConfirm} onOpenChange={setShowExitConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("common.confirmExit")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("common.unsavedChanges")}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t("common.back")}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setIsFormDirty(false);
+                setIsSheetOpen(false);
+                setShowExitConfirm(false);
+              }}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              {t("common.confirm")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

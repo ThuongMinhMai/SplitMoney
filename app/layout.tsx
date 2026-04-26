@@ -69,6 +69,10 @@ export const metadata: Metadata = {
   },
 };
 
+import { Toaster } from "sonner";
+import { ThemeProvider } from "@/components/theme-provider";
+import { I18nProvider } from "@/context/i18n-context";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -76,12 +80,23 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="vi"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children}
-        <Analytics />
+        <I18nProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <Toaster position="top-center" richColors />
+            <Analytics />
+          </ThemeProvider>
+        </I18nProvider>
       </body>
     </html>
   );
