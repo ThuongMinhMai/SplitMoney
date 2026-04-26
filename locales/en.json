@@ -76,12 +76,28 @@
     "owed": "Owed"
   },
   "transactions": {
-    "title": "Transactions",
-    "noTransactions": "No transactions needed",
-    "allSettled": "Everyone is settled",
-    "pays": "pays",
-    "completed": "Completed",
-    "count": "transactions"
+    "count": "transactions",
+    "noTransactions": "No transactions",
+    "allSettled": "All bills are settled!"
+  },
+  "tour": {
+    "welcome": "Welcome!",
+    "welcomeDesc": "Let me guide you through the fastest way to use the Split Money app.",
+    "addMember": "Add Members",
+    "addMemberDesc": "Start by entering the names of the friends participating in this trip or party.",
+    "addBill": "Add Bill",
+    "addBillDesc": "Once you have at least 2 members, you can start adding expenses here.",
+    "stats": "Overview Stats",
+    "statsDesc": "See total spent, number of members, and current bills.",
+    "summary": "Summary Table",
+    "summaryDesc": "Where you track who spent how much, used how much, and each person's current balance.",
+    "transactions": "Payment Guide",
+    "transactionsDesc": "The app will automatically calculate the most optimal way to pay so everyone breaks even.",
+    "settings": "Settings",
+    "settingsDesc": "You can change the language or switch to dark mode here.",
+    "next": "Next",
+    "prev": "Back",
+    "done": "Done"
   },
   "details": {
     "title": "Member Details",

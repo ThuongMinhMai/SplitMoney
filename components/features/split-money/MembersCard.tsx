@@ -51,7 +51,7 @@ export function MembersCard({
   const handleAdd = () => {
     if (validateMemberName(newMemberName)) {
       onAdd();
-      toast.success(`${t('members.added')}: "${newMemberName}"`);
+      toast.success(`${t("members.added")}: "${newMemberName}"`);
     }
   };
 
@@ -67,13 +67,16 @@ export function MembersCard({
   };
 
   return (
-    <CardCustom className="shadow-sm hover:shadow-md transition-all border-border">
+    <CardCustom
+      className="shadow-sm hover:shadow-md transition-all border-border"
+      data-tour="members-list"
+    >
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-sm font-semibold">
           <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
             <Users className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          {t('members.title')}
+          {t("members.title")}
           {members.length > 0 && (
             <Badge
               variant="secondary"
@@ -88,10 +91,11 @@ export function MembersCard({
         <div className="space-y-2">
           <div className="flex gap-2">
             <CustomInput
-              placeholder={t('members.placeholder')}
+              placeholder={t("members.placeholder")}
               value={newMemberName}
               onChange={handleNameChange}
               onKeyDown={handleKeyDown}
+              data-tour="add-member"
               className={cn(
                 "h-9 text-sm focus:ring-0.5 focus:ring-emerald-500 focus:border-emerald-500 border-border",
                 error &&
@@ -123,8 +127,8 @@ export function MembersCard({
         {members.length === 0 ? (
           <div className="text-center py-6 text-muted-foreground text-sm">
             <Users className="h-10 w-10 mx-auto opacity-30 mb-2" />
-            <p>{t('members.noMembers')}</p>
-            <p className="text-xs">{t('members.addHint')}</p>
+            <p>{t("members.noMembers")}</p>
+            <p className="text-xs">{t("members.addHint")}</p>
           </div>
         ) : (
           <ScrollArea className="max-h-52">
@@ -150,23 +154,25 @@ export function MembersCard({
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>{t('common.confirmDelete')}</AlertDialogTitle>
+                        <AlertDialogTitle>
+                          {t("common.confirmDelete")}
+                        </AlertDialogTitle>
                         <AlertDialogDescription>
-                          {t('common.deleteConfirmDesc')}
+                          {t("common.deleteConfirmDesc")}
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>
-                          {t('common.cancel')}
+                          {t("common.cancel")}
                         </AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() => {
                             onRemove(m.id);
-                            toast.info(`${t('members.removed')}: "${m.name}"`);
+                            toast.info(`${t("members.removed")}: "${m.name}"`);
                           }}
                           className="bg-red-600 hover:bg-red-700 text-white"
                         >
-                          {t('common.delete')}
+                          {t("common.delete")}
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>

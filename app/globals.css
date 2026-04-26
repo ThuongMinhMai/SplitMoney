@@ -94,6 +94,7 @@
     border-color: var(--border);
     outline-color: var(--ring);
   }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -104,8 +105,26 @@
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom);
   }
+
   .animate-in {
     animation-duration: 300ms;
   }
 }
 
+
+/* Onboarding Tour Custom Styles */
+.driver-popover-custom {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  max-width: none !important;
+}
+
+.driver-popover-custom .driver-popover-title,
+.driver-popover-custom .driver-popover-description,
+.driver-popover-custom .driver-popover-footer,
+.driver-popover-custom .driver-popover-close-btn,
+.driver-popover-custom .driver-popover-arrow {
+  display: none !important;
+}

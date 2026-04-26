@@ -13,7 +13,7 @@ interface TransactionsCardProps {
 export function TransactionsCard({ transactions }: TransactionsCardProps) {
   const { t } = useI18n();
   return (
-    <CardCustom className="shadow-sm hover:shadow-md transition-all border-emerald-200/60">
+    <CardCustom className="shadow-sm hover:shadow-md transition-all border-emerald-200/60" data-tour="transactions-card">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-sm font-semibold">
           <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">

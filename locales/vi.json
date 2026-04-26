@@ -77,11 +77,30 @@
   },
   "transactions": {
     "title": "Giao dịch",
-    "noTransactions": "Không có giao dịch nào cần thực hiện",
-    "allSettled": "Mọi người đã hòa vốn",
+    "noTransactions": "Không có giao dịch",
+    "allSettled": "Tất cả các khoản chi đã được giải quyết ổn thỏa!",
     "pays": "trả cho",
     "completed": "Đã xong",
     "count": "giao dịch"
+  },
+  "tour": {
+    "welcome": "Chào mừng bạn!",
+    "welcomeDesc": "Hãy để tôi hướng dẫn bạn cách sử dụng ứng dụng Chia Tiền một cách nhanh nhất.",
+    "addMember": "Thêm thành viên",
+    "addMemberDesc": "Bắt đầu bằng việc nhập tên những người bạn tham gia vào chuyến đi hoặc bữa tiệc này.",
+    "addBill": "Thêm khoản chi",
+    "addBillDesc": "Sau khi có ít nhất 2 thành viên, bạn có thể bắt đầu thêm các khoản chi tiêu tại đây.",
+    "stats": "Thống kê tổng quan",
+    "statsDesc": "Xem tổng số tiền đã chi, số thành viên và số hóa đơn hiện tại.",
+    "summary": "Bảng tổng hợp",
+    "summaryDesc": "Nơi bạn theo dõi ai đã chi bao nhiêu, đã dùng bao nhiêu và số dư hiện tại của từng người.",
+    "transactions": "Hướng dẫn thanh toán",
+    "transactionsDesc": "Ứng dụng sẽ tự động tính toán cách thanh toán tối ưu nhất để tất cả mọi người hòa vốn.",
+    "settings": "Cài đặt",
+    "settingsDesc": "Bạn có thể đổi ngôn ngữ hoặc chuyển sang chế độ tối tại đây.",
+    "next": "Tiếp theo",
+    "prev": "Quay lại",
+    "done": "Xong"
   },
   "details": {
     "title": "Chi tiết từng người",

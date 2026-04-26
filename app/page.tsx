@@ -30,6 +30,7 @@ import Image from "next/image";
 import { useSplitMoney } from "@/hooks/use-split-money";
 import { useI18n } from "@/context/i18n-context";
 import { ThemeToggle, LanguageToggle } from "@/components/settings-toggles";
+import { OnboardingTour } from "@/components/OnboardingTour";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -91,6 +92,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen ">
+      <OnboardingTour />
       <header className="fixed top-0 left-0 right-0 z-40 border-b backdrop-blur-md shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -108,9 +110,16 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-2 ml-auto">
-            <LanguageToggle />
-            <ThemeToggle />
+          <div
+            className="flex items-center gap-1 sm:gap-2 ml-auto"
+            data-tour="settings-group"
+          >
+            <div data-tour="language-toggle">
+              <LanguageToggle />
+            </div>
+            <div data-tour="theme-toggle">
+              <ThemeToggle />
+            </div>
             <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
           </div>
 
@@ -120,6 +129,7 @@ export default function Home() {
                 size="default"
                 className="bg-gradient-to-r text-white from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 gap-2 shadow-md hover:shadow-lg transition-all"
                 disabled={members.length < 2}
+                data-tour="add-bill"
               >
                 <Plus className="h-4 w-4" />
                 <span className="hidden xs:inline">{t("common.addBill")}</span>
@@ -153,7 +163,10 @@ export default function Home() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-20">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
+        <div
+          className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6"
+          data-tour="stats"
+        >
           <StatCard
             label={t("common.totalSpent")}
             value={formatMoney(totalSpent)}
