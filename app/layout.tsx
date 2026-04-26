@@ -75,8 +75,10 @@ import { I18nProvider } from "@/context/i18n-context";
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html
@@ -93,6 +95,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            {modal}
             <Toaster position="top-center" richColors />
             <Analytics />
           </ThemeProvider>

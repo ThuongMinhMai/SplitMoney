@@ -1,7 +1,8 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { ChevronDown, ChevronUp, Receipt, User } from "lucide-react";
+import { ChevronDown, ChevronUp, Receipt, User, Eye } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Avatar } from "../Avatar";
 import { formatMoneyFull } from "../utils";
 import { BillItem } from "./bill-item";
@@ -21,6 +22,26 @@ export function MemberRow({ member, isExpanded, onToggle }: MemberRowProps) {
     const share = b.participantShares.find((s) => s.memberId === member.memberId);
     return sum + (share?.amount || 0);
   }, 0);
+
+  const router = useRouter();
+
+  const handleViewBill = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const dataString = JSON.stringify({
+      memberDetail: member,
+      generatedAt: new Date().toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    });
+    
+    // safe btoa for unicode
+    const data = btoa(unescape(encodeURIComponent(dataString)));
+    router.push(`/member/${member.memberId}/bill?data=${data}`);
+  };
 
   return (
     <div className="rounded-xl border bg-gradient-to-br from-card to-muted/20 overflow-hidden">
@@ -44,6 +65,13 @@ export function MemberRow({ member, isExpanded, onToggle }: MemberRowProps) {
           <Badge variant="outline" className="text-[10px] h-5 hidden sm:inline-flex">
             {member.billsUsed.length} {t('details.usedItems')}
           </Badge>
+          <button
+            onClick={handleViewBill}
+            className="p-1.5 hover:bg-muted rounded-md transition-colors text-emerald-600 dark:text-emerald-400"
+            title="Xem sao kê cá nhân"
+          >
+            <Eye className="h-4 w-4" />
+          </button>
           {isExpanded ? (
             <ChevronUp className="h-4 w-4 text-muted-foreground" />
           ) : (
