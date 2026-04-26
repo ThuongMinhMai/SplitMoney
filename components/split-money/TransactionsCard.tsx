@@ -11,11 +11,11 @@ interface TransactionsCardProps {
 
 export function TransactionsCard({ transactions }: TransactionsCardProps) {
   return (
-    <CardCustom className="shadow-sm hover:shadow-md transition-all border-emerald-200/60 dark:border-emerald-800/40">
+    <CardCustom className="shadow-sm hover:shadow-md transition-all border-emerald-200/60">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-          <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/50">
-            <Wallet className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+          <div className="p-1 rounded-lg bg-emerald-100">
+            <Wallet className="h-4 w-4 text-emerald-600" />
           </div>
           Giao dịch
           {transactions.length > 0 && (
@@ -42,19 +42,19 @@ export function TransactionsCard({ transactions }: TransactionsCardProps) {
                 <div className="flex items-center gap-2 min-w-0 flex-wrap">
                   <Badge
                     variant="outline"
-                    className="border-rose-200 text-rose-700 bg-rose-50 dark:bg-rose-950/30 dark:text-rose-400 dark:border-rose-800 text-xs font-semibold px-2 py-1"
+                    className="border-rose-200 text-rose-700 bg-rose-50 text-xs font-semibold px-2 py-1"
                   >
                     {tx.from}
                   </Badge>
                   <ArrowRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                   <Badge
                     variant="outline"
-                    className="border-emerald-200 text-emerald-700 bg-emerald-50 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-800 text-xs font-semibold px-2 py-1"
+                    className="border-emerald-200 text-emerald-700 bg-emerald-50 text-xs font-semibold px-2 py-1"
                   >
                     {tx.to}
                   </Badge>
                 </div>
-                <span className="font-mono font-bold text-sm shrink-0 bg-emerald-50 dark:bg-emerald-950/30 px-2 py-1 rounded-lg">
+                <span className="font-mono font-bold text-sm shrink-0 bg-emerald-50 px-2 py-1 rounded-lg">
                   {formatMoney(tx.amount)}
                 </span>
               </div>

@@ -16,9 +16,7 @@ export function StatCard({ label, value, valueClass, icon }: StatCardProps) {
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
             {label}
           </p>
-          {icon && (
-            <div className="text-emerald-600 dark:text-emerald-400">{icon}</div>
-          )}
+          {icon && <div className="text-emerald-600">{icon}</div>}
         </div>
         <p
           className={cn(

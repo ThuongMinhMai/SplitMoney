@@ -10,7 +10,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Wallet } from "lucide-react";
+import { Banknote, Plus, ReceiptText, UserRound, Wallet } from "lucide-react";
 import { Avatar } from "@/components/split-money/Avatar";
 import { StatCard } from "@/components/split-money/StatCard";
 import { AddBillForm } from "@/components/split-money/AddBillForm";
@@ -32,7 +32,6 @@ export default function Home() {
   const [bills, setBills] = useState<Bill[]>([]);
   const [newMemberName, setNewMemberName] = useState("");
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [showMemberDetails, setShowMemberDetails] = useState(false);
   const addMember = useCallback(() => {
     const name = newMemberName.trim();
     if (!name) return;
@@ -131,7 +130,7 @@ export default function Home() {
               <Button
                 size="default"
                 className="bg-gradient-to-r text-white from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 gap-2 shadow-md hover:shadow-lg transition-all"
-                disabled={members.length === 0}
+                disabled={members.length < 2}
               >
                 <Plus className="h-4 w-4" />
                 <span className="hidden xs:inline">Thêm khoản chi</span>
@@ -140,7 +139,7 @@ export default function Home() {
             </SheetTrigger>
             <SheetContent
               side="bottom"
-              className="rounded-t-2xl max-h-[92dvh] overflow-y-auto pb-safe bg-white dark:bg-slate-900 border-t-4 border-t-emerald-500"
+              className="rounded-t-2xl max-h-[92dvh] overflow-y-auto p-4 pb-safe bg-white border-t-4 border-t-emerald-500"
             >
               <SheetHeader className="mb-5">
                 <SheetTitle className="text-left text-xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-800 bg-clip-text text-transparent">
@@ -162,18 +161,18 @@ export default function Home() {
           <StatCard
             label="Tổng chi"
             value={formatMoney(totalSpent)}
-            valueClass="text-emerald-700 dark:text-emerald-400"
-            icon={<Wallet className="h-4 w-4" />}
+            valueClass="text-emerald-700"
+            icon={<Banknote className="h-6 w-6" />}
           />
           <StatCard
             label="Thành viên"
             value={String(members.length)}
-            icon={<Wallet className="h-4 w-4" />}
+            icon={<UserRound className="h-6 w-6" />}
           />
           <StatCard
             label="Khoản chi"
             value={String(bills.length)}
-            icon={<Wallet className="h-4 w-4" />}
+            icon={<ReceiptText className="h-6 w-6" />}
           />
         </div>
         <div className="lg:hidden">

@@ -50,17 +50,17 @@ export function MembersCard({
   };
 
   return (
-    <CardCustom className="shadow-sm hover:shadow-md transition-all border-gray-200 dark:border-gray-700">
+    <CardCustom className="shadow-sm hover:shadow-md transition-all border-gray-200">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-          <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/50">
-            <Users className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+          <div className="p-1 rounded-lg bg-emerald-100">
+            <Users className="h-4 w-4 text-emerald-600" />
           </div>
           Thành viên
           {members.length > 0 && (
             <Badge
               variant="secondary"
-              className="ml-auto font-mono text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200"
+              className="ml-auto font-mono text-xs bg-emerald-100 text-emerald-800"
             >
               {members.length}
             </Badge>
@@ -76,7 +76,7 @@ export function MembersCard({
               onChange={handleNameChange}
               onKeyDown={handleKeyDown}
               className={cn(
-                "h-9 text-sm focus:ring-0.5 focus:ring-emerald-500 focus:border-emerald-500 border-gray-200 dark:border-gray-700",
+                "h-9 text-sm focus:ring-0.5 focus:ring-emerald-500 focus:border-emerald-500 border-gray-200",
                 error &&
                   "border-red-500 focus:ring-red-500 focus:border-red-500",
               )}
@@ -93,10 +93,10 @@ export function MembersCard({
           {error && (
             <Alert
               variant="destructive"
-              className="border-red-200 bg-red-50 dark:bg-red-950/30 dark:border-red-800 py-2"
+              className="border-red-200 bg-red-50 py-2"
             >
               <AlertCircle className="h-3.5 w-3.5" />
-              <AlertDescription className="text-xs text-red-800 dark:text-red-300">
+              <AlertDescription className="text-xs text-red-800">
                 {error}
               </AlertDescription>
             </Alert>
@@ -115,7 +115,7 @@ export function MembersCard({
               {members.map((m) => (
                 <div
                   key={m.id}
-                  className="flex items-center justify-between px-3 py-2 rounded-lg bg-gradient-to-r from-muted/40 to-muted/20 hover:from-muted/60 hover:to-muted/40 transition-all group border border-transparent hover:border-gray-200 dark:hover:border-gray-700"
+                  className="flex items-center justify-between px-3 py-2 rounded-lg bg-gradient-to-r from-muted/40 to-muted/20 hover:from-muted/60 hover:to-muted/40 transition-all group border border-transparent hover:border-gray-200"
                 >
                   <div className="flex items-center gap-2.5">
                     <Avatar name={m.name} size="sm" />
@@ -124,7 +124,7 @@ export function MembersCard({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all"
+                    className="h-7 w-7 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-red-600 hover:bg-red-50 transition-all"
                     onClick={() => onRemove(m.id)}
                   >
                     <X className="h-3.5 w-3.5" />

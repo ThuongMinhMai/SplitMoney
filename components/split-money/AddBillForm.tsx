@@ -200,7 +200,7 @@ export function AddBillForm({ members, onAdd, onClose }: AddBillFormProps) {
           placeholder="VD: Ăn tối nhà hàng, Cafe, Taxi..."
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 border-gray-200 dark:border-gray-700 h-11"
+          className="focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 border-gray-200 h-11"
         />
       </div>
 
@@ -215,7 +215,7 @@ export function AddBillForm({ members, onAdd, onClose }: AddBillFormProps) {
           placeholder="0"
           value={amount}
           onChange={handleAmountChange}
-          className="focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 border-gray-200 dark:border-gray-700 font-mono text-lg h-11"
+          className="focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 border-gray-200 font-mono text-lg h-11"
         />
       </div>
 
@@ -226,7 +226,7 @@ export function AddBillForm({ members, onAdd, onClose }: AddBillFormProps) {
           Người trả trước
         </Label>
         <Select value={paidBy} onValueChange={setPaidBy}>
-          <SelectTrigger className="focus:ring-2 focus:ring-emerald-500 border-gray-200 dark:border-gray-700 h-11">
+          <SelectTrigger className="focus:ring-2 focus:ring-emerald-500 border-gray-200 h-11">
             <SelectValue placeholder="Chọn người trả" />
           </SelectTrigger>
           <SelectContent position="popper" className="bg-white">
@@ -248,7 +248,7 @@ export function AddBillForm({ members, onAdd, onClose }: AddBillFormProps) {
           <Users className="h-3.5 w-3.5" />
           Người tham gia
         </Label>
-        <div className="border rounded-xl divide-y bg-muted/20 border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="border rounded-xl divide-y bg-muted/20 border-gray-200 overflow-hidden">
           {members.map((m) => (
             <label
               key={m.id}
@@ -257,7 +257,7 @@ export function AddBillForm({ members, onAdd, onClose }: AddBillFormProps) {
               <Checkbox
                 checked={participants.includes(m.id)}
                 onCheckedChange={() => toggleParticipant(m.id)}
-                className="data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600 border-gray-300 h-5 w-5"
+                className="data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600 text-white  border-gray-300 h-5 w-5"
               />
               <Avatar name={m.name} size="sm" />
               <span className="text-sm font-medium">{m.name}</span>
@@ -285,17 +285,17 @@ export function AddBillForm({ members, onAdd, onClose }: AddBillFormProps) {
         >
           <div
             className={cn(
-              "flex-1 rounded-md border p-2 cursor-pointer transition-all",
+              "flex-1 flex flex-col justify-center items-center rounded-md border p-2 cursor-pointer transition-all",
               splitType === "equal"
-                ? "border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/20"
-                : "border-gray-200 dark:border-gray-700 hover:border-gray-300",
+                ? "border-emerald-500 bg-emerald-50/50"
+                : "border-gray-200 hover:border-gray-300",
             )}
             onClick={() => setSplitType("equal")}
           >
             <RadioGroupItem value="equal" id="equal" className="sr-only" />
             <Label
               htmlFor="equal"
-              className="flex items-center justify-center gap-2 cursor-pointer"
+              className="flex items-center bg-white justify-center gap-2 cursor-pointer"
             >
               <Scale
                 className={cn(
@@ -318,8 +318,8 @@ export function AddBillForm({ members, onAdd, onClose }: AddBillFormProps) {
             className={cn(
               "flex-1 rounded-md border p-2 cursor-pointer transition-all",
               splitType === "custom"
-                ? "border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/20"
-                : "border-gray-200 dark:border-gray-700 hover:border-gray-300",
+                ? "border-emerald-500 bg-emerald-50/50"
+                : "border-gray-200 hover:border-gray-300",
             )}
             onClick={() => setSplitType("custom")}
           >
@@ -372,7 +372,7 @@ export function AddBillForm({ members, onAdd, onClose }: AddBillFormProps) {
                       onChange={(e) =>
                         handleCustomAmountChange(pid, e.target.value)
                       }
-                      className="pl-7 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 border-gray-200 dark:border-gray-700 font-mono"
+                      className="pl-7 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 border-gray-200 font-mono"
                     />
                   </div>
                 </div>
@@ -381,12 +381,9 @@ export function AddBillForm({ members, onAdd, onClose }: AddBillFormProps) {
           </div>
 
           {customTotalError && (
-            <Alert
-              variant="destructive"
-              className="border-red-200 bg-red-50 dark:bg-red-950/30 dark:border-red-800"
-            >
+            <Alert variant="destructive" className="border-red-200 bg-red-50 ">
               <AlertCircle className="h-4 w-4" />
-              <AlertDescription className="text-xs text-red-800 dark:text-red-300">
+              <AlertDescription className="text-xs text-red-800">
                 {customTotalError}
               </AlertDescription>
             </Alert>
@@ -396,8 +393,8 @@ export function AddBillForm({ members, onAdd, onClose }: AddBillFormProps) {
             amountRaw > 0 &&
             participants.length > 0 &&
             Object.values(customAmounts).some((v) => v) && (
-              <Alert className="border-emerald-200 bg-emerald-50 dark:bg-emerald-950/30 dark:border-emerald-800">
-                <AlertDescription className="text-xs text-emerald-800 dark:text-emerald-300 font-mono flex items-center justify-between">
+              <Alert className="border-emerald-200 bg-emerald-50 ">
+                <AlertDescription className="text-xs text-emerald-800 font-mono flex items-center justify-between">
                   <span>Tổng đã nhập:</span>
                   <span className="font-bold">
                     {formatMoneyFull(
@@ -414,12 +411,9 @@ export function AddBillForm({ members, onAdd, onClose }: AddBillFormProps) {
       )}
 
       {error && (
-        <Alert
-          variant="destructive"
-          className="border-red-200 bg-red-50 dark:bg-red-950/30 dark:border-red-800"
-        >
+        <Alert variant="destructive" className="border-red-200 bg-red-50">
           <AlertCircle className="h-4 w-4" />
-          <AlertDescription className="text-sm text-red-800 dark:text-red-300">
+          <AlertDescription className="text-sm text-red-800">
             {error}
           </AlertDescription>
         </Alert>

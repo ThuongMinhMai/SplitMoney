@@ -24,8 +24,8 @@ export function SummaryCard({ summaries, hasBills }: SummaryCardProps) {
     <CardCustom className="shadow-sm hover:shadow-md transition-all">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-          <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/50">
-            <BarChart3 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+          <div className="p-1 rounded-lg bg-emerald-100">
+            <BarChart3 className="h-4 w-4 text-emerald-600" />
           </div>
           Sao kê từng người
         </CardTitle>
@@ -64,10 +64,10 @@ export function SummaryCard({ summaries, hasBills }: SummaryCardProps) {
                         <span className="font-medium text-sm">{s.name}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right font-mono text-sm text-emerald-700 dark:text-emerald-400 py-2.5 font-semibold">
+                    <TableCell className="text-right font-mono text-sm text-emerald-700 py-2.5 font-semibold">
                       {formatMoney(s.paid)}
                     </TableCell>
-                    <TableCell className="text-right font-mono text-sm text-rose-600 dark:text-rose-400 py-2.5 font-semibold">
+                    <TableCell className="text-right font-mono text-sm text-rose-600 py-2.5 font-semibold">
                       {formatMoney(s.used)}
                     </TableCell>
                     <TableCell className="text-right py-2.5">
@@ -75,8 +75,8 @@ export function SummaryCard({ summaries, hasBills }: SummaryCardProps) {
                         className={cn(
                           "font-mono font-bold text-sm px-2 py-0.5 rounded-full",
                           s.balance >= 0
-                            ? "text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30"
-                            : "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/30",
+                            ? "text-emerald-700 bg-emerald-50"
+                            : "text-rose-600 bg-rose-50",
                         )}
                       >
                         {s.balance >= 0 ? "+" : ""}

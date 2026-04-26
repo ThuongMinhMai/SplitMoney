@@ -106,11 +106,11 @@ export function MemberBillDetails({ members, bills }: MemberBillDetailsProps) {
     <Card className="shadow-sm hover:shadow-md transition-all">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-sm font-semibold">
-          <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/50">
-            <TrendingUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+          <div className="p-1 rounded-lg bg-emerald-100">
+            <TrendingUp className="h-4 w-4 text-emerald-600" />
           </div>
           Chi tiết từng người
-          <Badge className="ml-auto bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
+          <Badge className="ml-auto bg-emerald-100 text-emerald-800">
             {members.length} thành viên
           </Badge>
         </CardTitle>
@@ -175,7 +175,7 @@ export function MemberBillDetails({ members, bills }: MemberBillDetailsProps) {
                   {member.billsPaid.length > 0 && (
                     <div>
                       <h4 className="text-sm font-semibold flex items-center gap-2 mb-3">
-                        <div className="p-0.5 rounded bg-emerald-100 dark:bg-emerald-900/50">
+                        <div className="p-0.5 rounded bg-emerald-100">
                           <Receipt className="h-3.5 w-3.5 text-emerald-600" />
                         </div>
                         Khoản đã trả
@@ -203,7 +203,7 @@ export function MemberBillDetails({ members, bills }: MemberBillDetailsProps) {
                                 </div>
                                 <div className="flex gap-2">
                                   {isSelfPayer && (
-                                    <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                    <Badge className="bg-blue-100 text-blue-800">
                                       <UserCheck className="h-3 w-3 mr-1" />
                                       Tự trả
                                     </Badge>
@@ -227,7 +227,7 @@ export function MemberBillDetails({ members, bills }: MemberBillDetailsProps) {
                                         className={cn(
                                           "flex justify-between text-xs",
                                           isSelf &&
-                                            "bg-emerald-50 dark:bg-emerald-950/30 -mx-1 px-1 py-0.5 rounded",
+                                            "bg-emerald-50 -mx-1 px-1 py-0.5 rounded",
                                         )}
                                       >
                                         <span className="flex items-center gap-1">
@@ -261,7 +261,7 @@ export function MemberBillDetails({ members, bills }: MemberBillDetailsProps) {
                   {member.billsUsed.length > 0 && (
                     <div>
                       <h4 className="text-sm font-semibold flex items-center gap-2 mb-3">
-                        <div className="p-0.5 rounded bg-amber-100 dark:bg-amber-900/50">
+                        <div className="p-0.5 rounded bg-amber-100">
                           <User className="h-3.5 w-3.5 text-amber-600" />
                         </div>
                         Khoản đã sử dụng
@@ -297,7 +297,7 @@ export function MemberBillDetails({ members, bills }: MemberBillDetailsProps) {
                                 </div>
                                 <div className="flex gap-2">
                                   {isSelfPayer && (
-                                    <Badge className="bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                                    <Badge className="bg-purple-100 text-purple-800">
                                       <UserCheck className="h-3 w-3 mr-1" />
                                       Tự dùng
                                     </Badge>
