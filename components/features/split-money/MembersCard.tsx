@@ -1,32 +1,16 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Users, Plus, X, AlertCircle } from "lucide-react";
-import { Avatar } from "./Avatar";
+import { Users } from "lucide-react";
 import type { IMember } from "./types";
 import { useMemberValidation } from "@/hooks/use-member-validation";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import { CustomInput } from "@/components/ui/custom-input";
 import { CardCustom } from "@/components/ui/card-custom";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { useState } from "react";
 import { useI18n } from "@/context/i18n-context";
+import { AddMemberInput } from "./members-card/AddMemberInput";
+import { MemberListItem } from "./members-card/MemberListItem";
 
 interface MembersCardProps {
   members: IMember[];
@@ -44,9 +28,7 @@ export function MembersCard({
   onRemove,
 }: MembersCardProps) {
   const { t } = useI18n();
-  const [memberToDelete, setMemberToDelete] = useState<IMember | null>(null);
-  const { error, validateMemberName, clearError } =
-    useMemberValidation(members);
+  const { error, validateMemberName, clearError } = useMemberValidation(members);
 
   const handleAdd = () => {
     if (validateMemberName(newMemberName)) {
@@ -88,42 +70,14 @@ export function MembersCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
-        <div className="space-y-2">
-          <div className="flex gap-2">
-            <CustomInput
-              placeholder={t("members.placeholder")}
-              value={newMemberName}
-              onChange={handleNameChange}
-              onKeyDown={handleKeyDown}
-              data-tour="add-member"
-              autoFocus
-              className={cn(
-                "h-9 text-sm focus:ring-0.5 focus:ring-emerald-500 focus:border-emerald-500 border-border",
-                error &&
-                  "border-red-500 focus:ring-red-500 focus:border-red-500",
-              )}
-            />
-            <Button
-              size="sm"
-              onClick={handleAdd}
-              className="h-9 px-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 shadow-sm text-white"
-            >
-              <Plus className="h-4 w-4" />
-            </Button>
-          </div>
-
-          {error && (
-            <Alert
-              variant="destructive"
-              className="border-red-200 bg-red-50 dark:bg-red-950/20 dark:border-red-900/50 py-2"
-            >
-              <AlertCircle className="h-3.5 w-3.5" />
-              <AlertDescription className="text-xs text-red-800 dark:text-red-400">
-                {error}
-              </AlertDescription>
-            </Alert>
-          )}
-        </div>
+        <AddMemberInput
+          newMemberName={newMemberName}
+          onNameChange={handleNameChange}
+          onKeyDown={handleKeyDown}
+          onAdd={handleAdd}
+          error={error}
+          t={t}
+        />
 
         {members.length === 0 ? (
           <div className="text-center py-6 text-muted-foreground text-sm">
@@ -135,50 +89,12 @@ export function MembersCard({
           <ScrollArea className="max-h-52">
             <div className="space-y-1.5 pr-3">
               {members.map((m) => (
-                <div
+                <MemberListItem
                   key={m.id}
-                  className="flex items-center justify-between px-3 py-2 rounded-lg bg-gradient-to-r from-muted/40 to-muted/20 hover:from-muted/60 hover:to-muted/40 transition-all group border border-transparent hover:border-border"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Avatar name={m.name} size="sm" />
-                    <span className="text-sm font-medium">{m.name}</span>
-                  </div>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-red-600 hover:bg-red-50 transition-all"
-                      >
-                        <X className="h-3.5 w-3.5" />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          {t("common.confirmDelete")}
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          {t("common.deleteConfirmDesc")}
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>
-                          {t("common.cancel")}
-                        </AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => {
-                            onRemove(m.id);
-                            toast.info(`${t("members.removed")}: "${m.name}"`);
-                          }}
-                          className="bg-red-600 hover:bg-red-700 text-white"
-                        >
-                          {t("common.delete")}
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
+                  member={m}
+                  onRemove={onRemove}
+                  t={t}
+                />
               ))}
             </div>
           </ScrollArea>

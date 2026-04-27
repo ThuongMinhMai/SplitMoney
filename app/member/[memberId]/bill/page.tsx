@@ -1,5 +1,4 @@
-import { MemberBillContent } from "@/components/features/split-money/MemberBillContent";
-import { MemberBillReceipt } from "@/components/features/split-money/Memberbillreceipt";
+import { MemberBillReceipt } from "@/components/features/split-money/MemberBillReceipt";
 import type { IMemberBillDetail } from "@/components/features/split-money/types";
 import { Receipt } from "lucide-react";
 import type { Metadata } from "next";
