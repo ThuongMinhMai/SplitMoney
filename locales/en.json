@@ -111,5 +111,28 @@
     "paidAmount": "Amount Paid",
     "mustPay": "Amount to Pay",
     "alreadyPaidHint": "You already paid for this, no need to transfer"
+  },
+  "receipt": {
+    "appTagline": "Smart expense splitting",
+    "member": "Member",
+    "date": "Date",
+    "billDetails": "Bill details",
+    "items": "items",
+    "youPaid": "You paid",
+    "paidBy": "{{name}} paid",
+    "yourShare": "Your share",
+    "payer": "payer",
+    "youLabel": "You ({{name}})",
+    "theyOweYou": "They owe you",
+    "youOwe": "You owe {{name}}",
+    "totalYouPaid": "Total you paid",
+    "totalYouUsed": "Total you used",
+    "balance": "Balance",
+    "groupOwesYou": "Group owes you",
+    "youOweGroup": "You owe the group",
+    "balancePositiveHint": "You are in the clear",
+    "balanceNegativeHint": "You owe the group",
+    "footerSlug": "splitmooney.app",
+    "footerThanks": "Thank you for using Split Money"
   }
 }

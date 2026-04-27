@@ -1,17 +1,17 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { MemberBillReceipt } from "@/components/features/split-money/Memberbillreceipt";
+import type { IMemberBillDetail } from "@/components/features/split-money/types";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { MemberBillContent } from "@/components/features/split-money/MemberBillContent";
-import type { MemberBillDetail } from "@/components/features/split-money/types";
-import { Receipt, Share2, Link2, CheckCircle2, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CheckCircle2, Link2, Receipt, Share2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface InterceptedModalPageProps {
   searchParams: Promise<{ data?: string }>;
@@ -21,11 +21,10 @@ export default function InterceptedBillModal({
   searchParams,
 }: InterceptedModalPageProps) {
   const router = useRouter();
-  const [memberData, setMemberData] = useState<MemberBillDetail | null>(null);
+  const [memberData, setMemberData] = useState<IMemberBillDetail | null>(null);
   const [open, setOpen] = useState(true);
   const [generatedAt, setGeneratedAt] = useState<string>("");
   const [copied, setCopied] = useState(false);
-  const [showShareTooltip, setShowShareTooltip] = useState(false);
 
   useEffect(() => {
     searchParams.then(({ data }) => {
@@ -33,7 +32,7 @@ export default function InterceptedBillModal({
       try {
         const decodedStr = decodeURIComponent(escape(atob(data)));
         const decoded = JSON.parse(decodedStr) as {
-          memberDetail: MemberBillDetail;
+          memberDetail: IMemberBillDetail;
           generatedAt: string;
         };
         setMemberData(decoded.memberDetail);
@@ -53,7 +52,6 @@ export default function InterceptedBillModal({
     try {
       const currentUrl = window.location.href;
 
-      // Try to use native share API first (mobile)
       if (navigator.share) {
         await navigator.share({
           title: `Sao kê của ${memberData?.memberName}`,
@@ -61,7 +59,6 @@ export default function InterceptedBillModal({
           url: currentUrl,
         });
       } else {
-        // Fallback to copy link
         await navigator.clipboard.writeText(currentUrl);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
@@ -96,12 +93,11 @@ export default function InterceptedBillModal({
 
         {memberData ? (
           <div className="relative">
-            <MemberBillContent data={memberData} generatedAt={generatedAt} />
+            <MemberBillReceipt data={memberData} generatedAt={generatedAt} />
 
             {/* Fixed Bottom Share Bar */}
             <div className="sticky bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-white via-white to-transparent">
               <div className="flex items-center gap-2 max-w-md mx-auto">
-                {/* Copy Link Button */}
                 <button
                   onClick={handleCopyLink}
                   className={cn(

@@ -14,7 +14,7 @@ import {
   Utensils,
 } from "lucide-react";
 import { formatMoney, getBillIcon } from "./utils";
-import type { Bill, Member } from "./types";
+import type { IBill, IMember } from "./types";
 import { CardCustom } from "@/components/ui/card-custom";
 import { useI18n } from "@/context/i18n-context";
 import {
@@ -39,8 +39,8 @@ const iconMap = {
 };
 
 interface BillsCardProps {
-  bills: Bill[];
-  members: Member[];
+  bills: IBill[];
+  members: IMember[];
   onRemove: (id: string) => void;
 }
 
@@ -54,14 +54,14 @@ export function BillsCard({ bills, members, onRemove }: BillsCardProps) {
             <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
               <Receipt className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
             </div>
-            {t('common.bills')}
+            {t("common.bills")}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-center py-8 text-muted-foreground text-sm space-y-1">
             <Receipt className="h-10 w-10 mx-auto opacity-30 mb-2" />
-            <p>{t('bills.noBills')}</p>
-            <p className="text-xs">{t('bills.addHint')}</p>
+            <p>{t("bills.noBills")}</p>
+            <p className="text-xs">{t("bills.addHint")}</p>
           </div>
         </CardContent>
       </CardCustom>
@@ -75,7 +75,7 @@ export function BillsCard({ bills, members, onRemove }: BillsCardProps) {
           <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
             <Receipt className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          {t('common.bills')}
+          {t("common.bills")}
           <Badge
             variant="secondary"
             className="ml-auto font-mono text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300"
@@ -126,23 +126,27 @@ export function BillsCard({ bills, members, onRemove }: BillsCardProps) {
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>{t('common.confirmDelete')}</AlertDialogTitle>
+                            <AlertDialogTitle>
+                              {t("common.confirmDelete")}
+                            </AlertDialogTitle>
                             <AlertDialogDescription>
-                              {t('common.deleteConfirmDesc')}
+                              {t("common.deleteConfirmDesc")}
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
                             <AlertDialogCancel>
-                              {t('common.cancel')}
+                              {t("common.cancel")}
                             </AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() => {
                                 onRemove(bill.id);
-                                toast.info(`${t('bills.removed')}: "${bill.name}"`);
+                                toast.info(
+                                  `${t("bills.removed")}: "${bill.name}"`,
+                                );
                               }}
                               className="bg-red-600 hover:bg-red-700 text-white"
                             >
-                              {t('common.delete')}
+                              {t("common.delete")}
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
@@ -152,15 +156,17 @@ export function BillsCard({ bills, members, onRemove }: BillsCardProps) {
 
                   <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground mb-2">
                     <span>
-                      {t('bills.paidBy')}:{" "}
+                      {t("bills.paidBy")}:{" "}
                       <span className="text-foreground font-medium">
                         {payer?.name}
                       </span>
                     </span>
                     <span>
-                      {t('bills.splitType')}:{" "}
+                      {t("bills.splitType")}:{" "}
                       <span className="text-foreground">
-                        {bill.splitType === "equal" ? t('bills.splitEqual') : t('bills.splitCustom')}
+                        {bill.splitType === "equal"
+                          ? t("bills.splitEqual")
+                          : t("bills.splitCustom")}
                       </span>
                     </span>
                   </div>

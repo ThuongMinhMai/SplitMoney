@@ -20,10 +20,10 @@ import { SummaryCard } from "@/components/features/split-money/SummaryCard";
 import { TransactionsCard } from "@/components/features/split-money/TransactionsCard";
 import { uid, formatMoney } from "@/components/features/split-money/utils";
 import type {
-  Member,
-  Bill,
-  Transaction,
-  MemberSummary,
+  IMember,
+  IBill,
+  ITransaction,
+  IMemberSummary,
 } from "@/components/features/split-money/types";
 import { MemberBillDetails } from "@/components/features/split-money/MemberBillDetails";
 import Image from "next/image";
@@ -81,7 +81,7 @@ export default function Home() {
   }, [addMember, newMemberName]);
 
   const handleAddBill = useCallback(
-    (billData: Omit<Bill, "id">) => {
+    (billData: Omit<IBill, "id">) => {
       isSubmittingRef.current = true;
       addBill(billData);
       setIsFormDirty(false);
@@ -97,7 +97,13 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 relative rounded-xl overflow-hidden shadow-md">
-              <Image src="/logo.jpg" alt="logo" fill className="object-cover" />
+              <Image
+                src="/logo.jpg"
+                sizes="36px"
+                alt="logo"
+                fill
+                className="object-cover"
+              />
             </div>
 
             <div>

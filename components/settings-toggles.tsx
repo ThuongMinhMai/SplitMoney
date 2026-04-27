@@ -16,7 +16,7 @@ export function ThemeToggle() {
   const { setTheme, theme } = useTheme();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl">
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -25,15 +25,24 @@ export function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")} className="cursor-pointer">
+        <DropdownMenuItem
+          onClick={() => setTheme("light")}
+          className="cursor-pointer"
+        >
           Light
           {theme === "light" && <Check className="ml-auto h-4 w-4" />}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")} className="cursor-pointer">
+        <DropdownMenuItem
+          onClick={() => setTheme("dark")}
+          className="cursor-pointer"
+        >
           Dark
           {theme === "dark" && <Check className="ml-auto h-4 w-4" />}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")} className="cursor-pointer">
+        <DropdownMenuItem
+          onClick={() => setTheme("system")}
+          className="cursor-pointer"
+        >
           System
           {theme === "system" && <Check className="ml-auto h-4 w-4" />}
         </DropdownMenuItem>
@@ -46,7 +55,7 @@ export function LanguageToggle() {
   const { language, setLanguage } = useI18n();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl">
           <Languages className="h-[1.2rem] w-[1.2rem]" />
@@ -54,11 +63,17 @@ export function LanguageToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setLanguage("vi")} className="cursor-pointer">
+        <DropdownMenuItem
+          onClick={() => setLanguage("vi")}
+          className="cursor-pointer"
+        >
           Tiếng Việt
           {language === "vi" && <Check className="ml-auto h-4 w-4" />}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLanguage("en")} className="cursor-pointer">
+        <DropdownMenuItem
+          onClick={() => setLanguage("en")}
+          className="cursor-pointer"
+        >
           English
           {language === "en" && <Check className="ml-auto h-4 w-4" />}
         </DropdownMenuItem>

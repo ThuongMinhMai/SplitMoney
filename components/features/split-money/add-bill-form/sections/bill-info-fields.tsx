@@ -20,11 +20,11 @@ import {
 } from "@/components/ui/select";
 import type { BillFormValues } from "@/lib/validations";
 import { Avatar } from "../../Avatar";
-import { Member } from "../../types";
+import { IMember } from "../../types";
 import { useI18n } from "@/context/i18n-context";
 
 interface BillInfoFieldsProps {
-  members: Member[];
+  members: IMember[];
 }
 
 export function BillInfoFields({ members }: BillInfoFieldsProps) {
@@ -40,11 +40,11 @@ export function BillInfoFields({ members }: BillInfoFieldsProps) {
           <FormItem className="space-y-2">
             <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-2">
               <Receipt className="h-3.5 w-3.5" />
-              {t('bills.name')}
+              {t("bills.name")}
             </FormLabel>
             <FormControl>
               <CustomInput
-                placeholder={t('bills.namePlaceholder')}
+                placeholder={t("bills.namePlaceholder")}
                 className="focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 border-border h-11"
                 {...field}
               />
@@ -61,7 +61,7 @@ export function BillInfoFields({ members }: BillInfoFieldsProps) {
           <FormItem className="space-y-2">
             <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-2">
               <DollarSign className="h-3.5 w-3.5" />
-              {t('bills.totalAmount')}
+              {t("bills.totalAmount")}
             </FormLabel>
             <FormControl>
               <MoneyInput
@@ -83,17 +83,21 @@ export function BillInfoFields({ members }: BillInfoFieldsProps) {
           <FormItem className="space-y-2">
             <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-2">
               <Users className="h-3.5 w-3.5" />
-              {t('bills.paidBy')}
+              {t("bills.paidBy")}
             </FormLabel>
             <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
                 <SelectTrigger className="focus:ring-2 focus:ring-emerald-500 border-border h-11">
-                  <SelectValue placeholder={t('bills.selectPayer')} />
+                  <SelectValue placeholder={t("bills.selectPayer")} />
                 </SelectTrigger>
               </FormControl>
               <SelectContent position="popper">
                 {members.map((m) => (
-                  <SelectItem key={m.id} value={m.id} className="cursor-pointer">
+                  <SelectItem
+                    key={m.id}
+                    value={m.id}
+                    className="cursor-pointer"
+                  >
                     <div className="flex items-center gap-2">
                       <Avatar name={m.name} size="sm" />
                       <span>{m.name}</span>

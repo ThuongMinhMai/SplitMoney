@@ -1,18 +1,19 @@
-import { useState } from "react";
-import type { Member } from "@/components/features/split-money/types";
+import { IMember } from "@/components/features/split-money/types";
+import { useI18n } from "@/context/i18n-context";
 import { memberSchema } from "@/lib/validations";
-import { toast } from "sonner";
+import { useState } from "react";
 
-export function useMemberValidation(members: Member[]) {
+export function useMemberValidation(members: IMember[]) {
   const [error, setError] = useState("");
+  const { t } = useI18n();
 
   const validateMemberName = (name: string): boolean => {
     const result = memberSchema.safeParse({ name });
 
     if (!result.success) {
-      const message = result.error.issues[0].message;
-      setError(message);
-      // toast.error(message);
+      const errorKey = result.error.issues[0].message;
+
+      setError(t(errorKey));
       return false;
     }
 
@@ -22,9 +23,7 @@ export function useMemberValidation(members: Member[]) {
     );
 
     if (isDuplicate) {
-      const message = `Thành viên "${trimmedName}" đã tồn tại`;
-      setError(message);
-      // toast.error(message);
+      setError(t("members.alreadyExists"));
       return false;
     }
 
@@ -32,11 +31,5 @@ export function useMemberValidation(members: Member[]) {
     return true;
   };
 
-  const clearError = () => setError("");
-
-  return {
-    error,
-    validateMemberName,
-    clearError,
-  };
+  return { error, validateMemberName, clearError: () => setError("") };
 }

@@ -8,13 +8,13 @@ import { BillInfoFields } from "./add-bill-form/sections/bill-info-fields";
 import { ParticipantsField } from "./add-bill-form/sections/participants-field";
 import { SplitTypeField } from "./add-bill-form/sections/split-type-field";
 import { CustomAmountsSection } from "./add-bill-form/sections/custom-amounts-section";
-import type { Member, Bill } from "./types";
+import type { IMember, IBill } from "./types";
 import { useState, useEffect } from "react";
 import { useI18n } from "@/context/i18n-context";
 
 interface AddBillFormProps {
-  members: Member[];
-  onAdd: (bill: Omit<Bill, "id">) => void;
+  members: IMember[];
+  onAdd: (bill: Omit<IBill, "id">) => void;
   onClose: () => void;
   onDirtyChange?: (isDirty: boolean) => void;
 }
@@ -27,17 +27,13 @@ export function AddBillForm({
 }: AddBillFormProps) {
   const { t } = useI18n();
 
-  const { form, onSubmit } = useAddBillForm(
-    (data) => {
-      onAdd(data);
-      toast.success(t('bills.added'));
-    },
-    onClose
-  );
+  const { form, onSubmit } = useAddBillForm((data) => {
+    onAdd(data);
+    toast.success(t("bills.added"));
+  }, onClose);
 
   const isDirty = form.formState.isDirty;
 
-  // Notify parent of dirty state
   useEffect(() => {
     onDirtyChange?.(isDirty);
   }, [isDirty, onDirtyChange]);
@@ -57,13 +53,13 @@ export function AddBillForm({
             onClick={onClose}
             className="flex-1 h-11 border-border hover:bg-muted"
           >
-            {t('common.cancel')}
+            {t("common.cancel")}
           </Button>
           <Button
             type="submit"
             className="flex-[2] bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 shadow-md hover:shadow-lg transition-all text-white h-11"
           >
-            {t('common.addBill')}
+            {t("common.addBill")}
           </Button>
         </div>
       </form>

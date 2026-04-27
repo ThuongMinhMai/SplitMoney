@@ -1,45 +1,40 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Avatar } from "./Avatar";
-import { formatMoneyFull } from "./utils";
-import type { MemberBillDetail } from "./types";
+import { cn } from "@/lib/utils";
 import {
-  Receipt,
-  TrendingUp,
-  TrendingDown,
-  User,
-  UserCheck,
-  Wallet,
-  CalendarDays,
-  ArrowRight,
+  Car,
+  CheckCircle2,
   Coffee,
-  Utensils,
-  ShoppingBag,
+  Crown,
+  Droplets,
+  Film,
   Gift,
   Home,
-  Car,
-  Film,
-  Smartphone,
-  Scissors,
   Plane,
-  Droplets,
-  Zap,
   QrCode,
-  Crown,
-  Users,
-  CheckCircle2,
+  Receipt,
   RefreshCw,
+  Scissors,
+  ShoppingBag,
+  Smartphone,
   Split,
+  User,
+  UserCheck,
+  Users,
+  Utensils,
+  Wallet,
+  Zap,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Avatar } from "./Avatar";
+import type { IMemberBillDetail, ISmartBill } from "./types";
+import { formatMoneyFull } from "./utils";
 
 interface MemberBillContentProps {
-  data: MemberBillDetail;
+  data: IMemberBillDetail;
   generatedAt?: string;
 }
 
-// Icon mapping
 const getBillIcon = (billName: string) => {
   const name = billName.toLowerCase();
   if (name.includes("ăn") || name.includes("cơm") || name.includes("nhà hàng"))
@@ -70,7 +65,6 @@ export function MemberBillContent({
   const balance = totalPaid - totalUsed;
   const isPositive = balance >= 0;
 
-  // SMART MERGE: Combine bills that appear in both lists
   const mergedBills = mergeBills(data);
 
   const dateStr =
@@ -85,13 +79,13 @@ export function MemberBillContent({
 
   return (
     <div className="w-full max-w-md mx-auto font-mono">
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800">
+      <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-zinc-200">
         {/* Header */}
-        <div className="text-center pt-8 pb-4 border-b border-dashed border-zinc-200 dark:border-zinc-800">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900/30 mb-3">
-            <Receipt className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+        <div className="text-center pt-8 pb-4 border-b border-dashed border-zinc-200">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-100 mb-3">
+            <Receipt className="h-6 w-6 text-emerald-600" />
           </div>
-          <h1 className="text-xl font-bold tracking-wide text-zinc-900 dark:text-zinc-100">
+          <h1 className="text-xl font-bold tracking-wide text-zinc-900">
             SPLIT MONEY
           </h1>
           <p className="text-[10px] text-zinc-400 tracking-wider mt-0.5">
@@ -100,20 +94,18 @@ export function MemberBillContent({
         </div>
 
         {/* Customer Info */}
-        <div className="px-5 py-4 border-b border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
+        <div className="px-5 py-4 border-b border-dashed border-zinc-200 bg-zinc-50/50">
           <div className="flex items-center gap-3">
             <Avatar name={data.memberName} size="md" />
             <div className="flex-1">
               <p className="text-[10px] text-zinc-400 tracking-wide">
                 THÀNH VIÊN
               </p>
-              <p className="font-bold text-zinc-900 dark:text-zinc-100">
-                {data.memberName}
-              </p>
+              <p className="font-bold text-zinc-900">{data.memberName}</p>
             </div>
             <div className="text-right">
               <p className="text-[10px] text-zinc-400">NGÀY</p>
-              <p className="text-xs font-mono text-zinc-700 dark:text-zinc-300">
+              <p className="text-xs font-mono text-zinc-700">
                 {dateStr.split(",")[0]}
               </p>
             </div>
@@ -121,20 +113,20 @@ export function MemberBillContent({
         </div>
 
         {/* Balance Summary */}
-        <div className="px-5 py-4 border-b border-dashed border-zinc-200 dark:border-zinc-800">
+        <div className="px-5 py-4 border-b border-dashed border-zinc-200">
           <div className="grid grid-cols-2 gap-3">
             <div className="text-center">
               <p className="text-[10px] text-zinc-400 uppercase">
                 Đã thanh toán
               </p>
-              <p className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
+              <p className="text-lg font-bold text-emerald-600">
                 {formatMoneyFull(totalPaid)}
               </p>
               <p className="text-[9px] text-zinc-400 mt-0.5">cho nhóm</p>
             </div>
             <div className="text-center">
               <p className="text-[10px] text-zinc-400 uppercase">Đã sử dụng</p>
-              <p className="text-lg font-bold text-amber-600 dark:text-amber-400">
+              <p className="text-lg font-bold text-amber-600">
                 {formatMoneyFull(totalUsed)}
               </p>
               <p className="text-[9px] text-zinc-400 mt-0.5">từ nhóm</p>
@@ -144,9 +136,7 @@ export function MemberBillContent({
           <div
             className={cn(
               "mt-4 p-3 rounded-lg text-center",
-              isPositive
-                ? "bg-emerald-50 dark:bg-emerald-950/30"
-                : "bg-rose-50 dark:bg-rose-950/30",
+              isPositive ? "bg-emerald-50" : "bg-rose-50",
             )}
           >
             <p className="text-[10px] uppercase tracking-wider text-zinc-500">
@@ -155,9 +145,7 @@ export function MemberBillContent({
             <p
               className={cn(
                 "text-2xl font-bold mt-0.5",
-                isPositive
-                  ? "text-emerald-600 dark:text-emerald-400"
-                  : "text-rose-600 dark:text-rose-400",
+                isPositive ? "text-emerald-600" : "text-rose-600",
               )}
             >
               {formatMoneyFull(Math.abs(balance))}
@@ -169,10 +157,10 @@ export function MemberBillContent({
         <div className="px-5 py-3">
           <div className="flex items-center gap-2 mb-3">
             <RefreshCw className="h-3.5 w-3.5 text-purple-500" />
-            <p className="text-xs font-bold uppercase tracking-wide text-zinc-700 dark:text-zinc-300">
+            <p className="text-xs font-bold uppercase tracking-wide text-zinc-700">
               TẤT CẢ HÓA ĐƠN
             </p>
-            <Badge className="ml-auto bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 text-[9px]">
+            <Badge className="ml-auto bg-purple-100 text-purple-700 text-[9px]">
               {mergedBills.length} hóa đơn
             </Badge>
           </div>
@@ -189,9 +177,9 @@ export function MemberBillContent({
         </div>
 
         {/* Footer */}
-        <div className="px-5 py-4 text-center border-t border-dashed border-zinc-200 dark:border-zinc-800">
+        <div className="px-5 py-4 text-center border-t border-dashed border-zinc-200">
           <div className="flex justify-center gap-1 mb-3">
-            <div className="w-8 h-8 bg-zinc-100 dark:bg-zinc-800 rounded flex items-center justify-center">
+            <div className="w-8 h-8 bg-zinc-100 rounded flex items-center justify-center">
               <QrCode className="h-4 w-4 text-zinc-400" />
             </div>
           </div>
@@ -204,12 +192,11 @@ export function MemberBillContent({
   );
 }
 
-// SMART BILL CARD - Hiển thị thông minh theo vai trò
 function SmartBillCard({
   bill,
   memberId,
 }: {
-  bill: SmartBill;
+  bill: ISmartBill;
   memberId: string;
 }) {
   const BillIcon = getBillIcon(bill.billName);
@@ -231,33 +218,32 @@ function SmartBillCard({
     // Vừa trả vừa tham gia (phổ biến)
     roleIcon = <Split className="h-3 w-3" />;
     roleText = "Bạn trả thay - Đã bao gồm phần của bạn";
-    roleColor = "text-purple-600 dark:text-purple-400";
+    roleColor = "text-purple-600";
   } else if (isPayer && myShare === bill.totalAmount) {
     // Trả full, không dùng
     roleIcon = <Crown className="h-3 w-3" />;
     roleText = "Bạn trả toàn bộ - Miễn phần của bạn";
-    roleColor = "text-emerald-600 dark:text-emerald-400";
+    roleColor = "text-emerald-600 ";
   } else if (isPayer) {
     // Chỉ trả, không dùng
     roleIcon = <UserCheck className="h-3 w-3" />;
     roleText = "Bạn trả thay - Không tham gia";
-    roleColor = "text-emerald-600 dark:text-emerald-400";
+    roleColor = "text-emerald-600";
   } else {
     // Chỉ tham gia
     roleIcon = <User className="h-3 w-3" />;
     roleText = `Bạn tham gia - Người trả: ${bill.paidByName}`;
-    roleColor = "text-amber-600 dark:text-amber-400";
+    roleColor = "text-amber-600";
   }
 
   return (
-    <div className="border rounded-xl border-zinc-200 dark:border-zinc-700 overflow-hidden bg-white dark:bg-zinc-900/50 shadow-sm hover:shadow-md transition-all">
-      {/* Header */}
-      <div className="p-3 pb-2 border-b border-dashed border-zinc-100 dark:border-zinc-800">
+    <div className="border rounded-xl border-zinc-200 overflow-hidden bg-white shadow-sm hover:shadow-md transition-all">
+      <div className="p-3 pb-2 border-b border-dashed border-zinc-100">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2 flex-1">
             <BillIcon className="h-4 w-4 text-zinc-500 shrink-0" />
             <div>
-              <p className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
+              <p className="font-semibold text-sm text-zinc-900">
                 {bill.billName}
               </p>
               <div className="flex items-center gap-1.5 mt-0.5">
@@ -273,22 +259,19 @@ function SmartBillCard({
               </div>
             </div>
           </div>
-          <p className="text-sm font-bold font-mono text-zinc-900 dark:text-zinc-100">
+          <p className="text-sm font-bold font-mono text-zinc-900">
             {formatMoneyFull(bill.totalAmount)}
           </p>
         </div>
       </div>
-
-      {/* Body - Show participant breakdown with visual indicator */}
       <div className="p-3">
-        {/* Your share highlight (if any) */}
         {myShare > 0 && (
           <div
             className={cn(
               "mb-2 p-2 rounded-lg text-[11px] flex justify-between items-center",
               isPayer
-                ? "bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/30"
-                : "bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/30",
+                ? "bg-emerald-50 border border-emerald-200"
+                : "bg-amber-50 border border-amber-200",
             )}
           >
             <span className="flex items-center gap-1.5">
@@ -297,7 +280,7 @@ function SmartBillCard({
               ) : (
                 <Wallet className="h-3 w-3 text-amber-600" />
               )}
-              <span className="font-medium">
+              <span className="font-medium text-black">
                 {isPayer ? "Phần của bạn (đã trả)" : "Phần của bạn (cần trả)"}
               </span>
             </span>
@@ -307,7 +290,6 @@ function SmartBillCard({
           </div>
         )}
 
-        {/* All participants */}
         <div className="space-y-1.5">
           <p className="text-[9px] text-zinc-400 uppercase tracking-wider flex items-center gap-1">
             <Users className="h-2.5 w-2.5" />
@@ -322,7 +304,7 @@ function SmartBillCard({
                 key={share.memberId}
                 className={cn(
                   "flex justify-between items-center text-[10px] py-1 px-1.5 rounded transition-colors",
-                  isSelf && "bg-purple-50 dark:bg-purple-950/20",
+                  isSelf && "bg-purple-50",
                 )}
               >
                 <div className="flex items-center gap-1.5">
@@ -330,19 +312,18 @@ function SmartBillCard({
                     className={cn(
                       "w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold",
                       isSelf
-                        ? "bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200"
+                        ? "bg-purple-200 text-purple-800"
                         : isPayerOfBill
-                          ? "bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-200"
-                          : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400",
+                          ? "bg-emerald-200 text-emerald-800"
+                          : "bg-zinc-100 text-zinc-600",
                     )}
                   >
                     {isSelf ? "B" : share.memberName.charAt(0)}
                   </span>
                   <span
                     className={cn(
-                      "truncate max-w-[120px]",
-                      isSelf &&
-                        "font-semibold text-purple-700 dark:text-purple-300",
+                      "truncate max-w-[120px] text-black",
+                      isSelf && "font-semibold text-purple-700",
                     )}
                   >
                     {share.memberName}
@@ -358,10 +339,9 @@ function SmartBillCard({
           })}
         </div>
 
-        {/* Net effect summary */}
-        <div className="mt-2 pt-2 border-t border-dashed border-zinc-100 dark:border-zinc-800 text-[9px]">
+        <div className="mt-2 pt-2 border-t border-dashed border-zinc-100 text-[9px]">
           {isPayer && myShare < bill.totalAmount && (
-            <div className="flex justify-between text-emerald-700 dark:text-emerald-400">
+            <div className="flex justify-between text-emerald-700">
               <span>↻ Người khác trả lại bạn:</span>
               <span className="font-mono">
                 {formatMoneyFull(bill.totalAmount - myShare)}
@@ -369,7 +349,7 @@ function SmartBillCard({
             </div>
           )}
           {!isPayer && myShare > 0 && (
-            <div className="flex justify-between text-amber-700 dark:text-amber-400">
+            <div className="flex justify-between text-amber-700">
               <span>→ Bạn cần trả:</span>
               <span className="font-mono">{formatMoneyFull(myShare)}</span>
             </div>
@@ -379,25 +359,9 @@ function SmartBillCard({
     </div>
   );
 }
-// Types
-interface SmartBill {
-  billId: string;
-  billName: string;
-  totalAmount: number;
-  paidBy: string;
-  paidByName: string;
-  participantShares: {
-    memberId: string;
-    memberName: string;
-    amount: number;
-  }[];
-}
 
-// MERGE FUNCTION: Gộp các bill trùng nhau
-function mergeBills(data: MemberBillDetail): SmartBill[] {
-  const billMap = new Map<string, SmartBill>();
-
-  // Thêm billsPaid vào map
+function mergeBills(data: IMemberBillDetail): ISmartBill[] {
+  const billMap = new Map<string, ISmartBill>();
   for (const bill of data.billsPaid) {
     billMap.set(bill.billId, {
       billId: bill.billId,
@@ -409,12 +373,9 @@ function mergeBills(data: MemberBillDetail): SmartBill[] {
     });
   }
 
-  // Merge billsUsed (nếu đã có trong map thì bổ sung, nếu chưa thì thêm)
   for (const bill of data.billsUsed) {
     if (billMap.has(bill.billId)) {
       const existing = billMap.get(bill.billId)!;
-      // Gộp participantShares (ưu tiên giữ lại dữ liệu từ billsPaid vì đã đầy đủ)
-      // Chỉ cập nhật nếu billsUsed có thông tin chia sẻ chi tiết hơn
       if (
         existing.participantShares.length === 0 &&
         bill.participantShares.length > 0

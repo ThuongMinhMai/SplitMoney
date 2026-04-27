@@ -1,28 +1,29 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wallet, ArrowRight, CheckCircle2 } from "lucide-react";
-import { formatMoney } from "./utils";
-import type { Transaction } from "./types";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardCustom } from "@/components/ui/card-custom";
 import { useI18n } from "@/context/i18n-context";
-
-interface TransactionsCardProps {
-  transactions: Transaction[];
+import { ArrowRight, CheckCircle2, Wallet } from "lucide-react";
+import type { ITransaction } from "./types";
+import { formatMoney } from "./utils";
+interface ITransactionsCardProps {
+  transactions: ITransaction[];
 }
-
-export function TransactionsCard({ transactions }: TransactionsCardProps) {
+export function TransactionsCard({ transactions }: ITransactionsCardProps) {
   const { t } = useI18n();
   return (
-    <CardCustom className="shadow-sm hover:shadow-md transition-all border-emerald-200/60" data-tour="transactions-card">
+    <CardCustom
+      className="shadow-sm hover:shadow-md transition-all border-emerald-200/60"
+      data-tour="transactions-card"
+    >
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-sm font-semibold">
           <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
             <Wallet className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          {t('transactions.title')}
+          {t("transactions.title")}
           {transactions.length > 0 && (
             <Badge className="ml-auto bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-mono text-xs border-none">
-              {transactions.length} {t('transactions.count')}
+              {transactions.length} {t("transactions.count")}
             </Badge>
           )}
         </CardTitle>
@@ -31,8 +32,8 @@ export function TransactionsCard({ transactions }: TransactionsCardProps) {
         {transactions.length === 0 ? (
           <div className="text-center py-6 text-muted-foreground text-sm space-y-1">
             <CheckCircle2 className="h-10 w-10 mx-auto opacity-30 mb-2 text-emerald-500" />
-            <p className="font-medium">{t('transactions.noTransactions')}</p>
-            <p className="text-xs">{t('transactions.allSettled')}</p>
+            <p className="font-medium">{t("transactions.noTransactions")}</p>
+            <p className="text-xs">{t("transactions.allSettled")}</p>
           </div>
         ) : (
           <div className="space-y-2">

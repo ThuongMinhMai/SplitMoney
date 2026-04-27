@@ -1,9 +1,9 @@
-export interface Member {
+export interface IMember {
   id: string;
   name: string;
 }
 
-export interface Bill {
+export interface IBill {
   id: string;
   name: string;
   totalAmount: number;
@@ -13,13 +13,13 @@ export interface Bill {
   customAmounts: Record<string, number>;
 }
 
-export interface Transaction {
+export interface ITransaction {
   from: string;
   to: string;
   amount: number;
 }
 
-export interface MemberSummary {
+export interface IMemberSummary {
   id: string;
   name: string;
   paid: number;
@@ -27,7 +27,7 @@ export interface MemberSummary {
   balance: number;
 }
 
-export interface BillDetail {
+export interface IBillDetail {
   billId: string;
   billName: string;
   totalAmount: number;
@@ -40,9 +40,31 @@ export interface BillDetail {
   }[];
 }
 
-export interface MemberBillDetail {
+export interface IMemberBillDetail {
   memberId: string;
   memberName: string;
-  billsPaid: BillDetail[];
-  billsUsed: BillDetail[];
+  billsPaid: IBillDetail[];
+  billsUsed: IBillDetail[];
+}
+
+export interface ISmartBill {
+  billId: string;
+  billName: string;
+  totalAmount: number;
+  paidBy: string;
+  paidByName: string;
+  participantShares: { memberId: string; memberName: string; amount: number }[];
+}
+
+export interface SmartBill {
+  billId: string;
+  billName: string;
+  totalAmount: number;
+  paidBy: string;
+  paidByName: string;
+  participantShares: {
+    memberId: string;
+    memberName: string;
+    amount: number;
+  }[];
 }

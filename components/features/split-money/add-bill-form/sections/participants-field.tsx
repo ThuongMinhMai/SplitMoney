@@ -12,11 +12,11 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import type { BillFormValues } from "@/lib/validations";
 import { Avatar } from "../../Avatar";
-import { Member } from "../../types";
+import { IMember } from "../../types";
 import { useI18n } from "@/context/i18n-context";
 
 interface ParticipantsFieldProps {
-  members: Member[];
+  members: IMember[];
 }
 
 export function ParticipantsField({ members }: ParticipantsFieldProps) {
@@ -31,7 +31,7 @@ export function ParticipantsField({ members }: ParticipantsFieldProps) {
         <FormItem className="space-y-2">
           <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-2">
             <Users className="h-3.5 w-3.5" />
-            {t('bills.participants')}
+            {t("bills.participants")}
           </FormLabel>
           <div className="border rounded-xl divide-y bg-muted/20 border-border overflow-hidden">
             {members.map((m) => {
@@ -58,7 +58,7 @@ export function ParticipantsField({ members }: ParticipantsFieldProps) {
             })}
             {members.length === 0 && (
               <p className="text-sm text-muted-foreground text-center py-6">
-                {t('members.noMembers')}
+                {t("members.noMembers")}
               </p>
             )}
           </div>

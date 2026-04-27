@@ -1,5 +1,6 @@
 import { MemberBillContent } from "@/components/features/split-money/MemberBillContent";
-import type { MemberBillDetail } from "@/components/features/split-money/types";
+import { MemberBillReceipt } from "@/components/features/split-money/Memberbillreceipt";
+import type { IMemberBillDetail } from "@/components/features/split-money/types";
 import { Receipt } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -16,7 +17,9 @@ export async function generateMetadata({
   if (data) {
     try {
       const decodedStr = decodeURIComponent(escape(atob(data)));
-      const decoded = JSON.parse(decodedStr) as { memberDetail: MemberBillDetail };
+      const decoded = JSON.parse(decodedStr) as {
+        memberDetail: IMemberBillDetail;
+      };
       return {
         title: `Sao kê của ${decoded.memberDetail.memberName} | Split Money Pro`,
         description: `Chi tiết khoản chi của ${decoded.memberDetail.memberName}`,
@@ -29,14 +32,14 @@ export async function generateMetadata({
 export default async function BillPage({ searchParams }: BillPageProps) {
   const { data } = await searchParams;
 
-  let memberData: MemberBillDetail | null = null;
+  let memberData: IMemberBillDetail | null = null;
   let generatedAt = "";
 
   if (data) {
     try {
       const decodedStr = decodeURIComponent(escape(atob(data)));
       const decoded = JSON.parse(decodedStr) as {
-        memberDetail: MemberBillDetail;
+        memberDetail: IMemberBillDetail;
         generatedAt: string;
       };
       memberData = decoded.memberDetail;
@@ -48,7 +51,6 @@ export default async function BillPage({ searchParams }: BillPageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background flex flex-col">
-      {/* Minimal top bar */}
       <header className="sticky top-0 z-10 border-b backdrop-blur-md bg-background/80 px-4 h-14 flex items-center gap-3">
         <Link
           href="/"
@@ -69,7 +71,7 @@ export default async function BillPage({ searchParams }: BillPageProps) {
 
       <main className="flex-1 px-4 py-8 max-w-lg mx-auto w-full">
         {memberData ? (
-          <MemberBillContent data={memberData} generatedAt={generatedAt} />
+          <MemberBillReceipt data={memberData} generatedAt={generatedAt} />
         ) : (
           <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
             <div className="p-4 rounded-2xl bg-muted/60">

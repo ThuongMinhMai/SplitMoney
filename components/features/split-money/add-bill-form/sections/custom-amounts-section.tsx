@@ -7,12 +7,12 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MoneyInput } from "@/components/ui/money-input";
 import type { BillFormValues } from "@/lib/validations";
 import { Avatar } from "../../Avatar";
-import type { Member } from "../../types";
+import type { IMember } from "../../types";
 import { formatMoneyFull } from "../../utils";
 import { useI18n } from "@/context/i18n-context";
 
 interface CustomAmountsSectionProps {
-  members: Member[];
+  members: IMember[];
 }
 
 export function CustomAmountsSection({ members }: CustomAmountsSectionProps) {
@@ -32,18 +32,18 @@ export function CustomAmountsSection({ members }: CustomAmountsSectionProps) {
 
   const currentTotalCustom = participants.reduce(
     (sum, pid) => sum + (customAmounts[pid] || 0),
-    0
+    0,
   );
   const customTotalDiff = Math.abs(currentTotalCustom - totalAmount);
   const isCustomTotalValid = customTotalDiff < 1;
-
-  // Fix for TS error: errors.customAmounts might be a nested object or a FieldError
-  const errorMessage = (errors.customAmounts as any)?.message || (errors.customAmounts as any)?.root?.message;
+  const errorMessage =
+    (errors.customAmounts as any)?.message ||
+    (errors.customAmounts as any)?.root?.message;
 
   return (
     <div className="space-y-3 animate-in slide-in-from-top-2 duration-200">
       <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-        {t('bills.splitCustom')}
+        {t("bills.splitCustom")}
       </FormLabel>
       <div className="space-y-2">
         {participants.map((pid) => {
@@ -78,10 +78,14 @@ export function CustomAmountsSection({ members }: CustomAmountsSectionProps) {
       </div>
 
       {!isCustomTotalValid && totalAmount > 0 && (
-        <Alert variant="destructive" className="border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-900/20">
+        <Alert
+          variant="destructive"
+          className="border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-900/20"
+        >
           <AlertCircle className="h-4 w-4" />
           <AlertDescription className="text-xs text-red-800 dark:text-red-400">
-            ({formatMoneyFull(currentTotalCustom)}) {t('bills.error.totalDiff')} ({formatMoneyFull(totalAmount)})
+            ({formatMoneyFull(currentTotalCustom)}) {t("bills.error.totalDiff")}{" "}
+            ({formatMoneyFull(totalAmount)})
           </AlertDescription>
         </Alert>
       )}
@@ -93,14 +97,14 @@ export function CustomAmountsSection({ members }: CustomAmountsSectionProps) {
           <Alert className="border-emerald-200 dark:border-emerald-900/50 bg-emerald-50 dark:bg-emerald-900/20">
             <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
             <AlertDescription className="text-xs text-emerald-800 dark:text-emerald-400 font-mono flex items-center justify-between ml-2">
-              <span>{t('bills.total')}:</span>
+              <span>{t("bills.total")}:</span>
               <span className="font-bold">
                 {formatMoneyFull(currentTotalCustom)}
               </span>
             </AlertDescription>
           </Alert>
         )}
-      
+
       {errorMessage && <FormMessage>{errorMessage}</FormMessage>}
     </div>
   );

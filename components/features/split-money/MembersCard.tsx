@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Users, Plus, X, AlertCircle } from "lucide-react";
 import { Avatar } from "./Avatar";
-import type { Member } from "./types";
+import type { IMember } from "./types";
 import { useMemberValidation } from "@/hooks/use-member-validation";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -29,7 +29,7 @@ import { useState } from "react";
 import { useI18n } from "@/context/i18n-context";
 
 interface MembersCardProps {
-  members: Member[];
+  members: IMember[];
   newMemberName: string;
   setNewMemberName: (v: string) => void;
   onAdd: () => void;
@@ -44,7 +44,7 @@ export function MembersCard({
   onRemove,
 }: MembersCardProps) {
   const { t } = useI18n();
-  const [memberToDelete, setMemberToDelete] = useState<Member | null>(null);
+  const [memberToDelete, setMemberToDelete] = useState<IMember | null>(null);
   const { error, validateMemberName, clearError } =
     useMemberValidation(members);
 
@@ -96,6 +96,7 @@ export function MembersCard({
               onChange={handleNameChange}
               onKeyDown={handleKeyDown}
               data-tour="add-member"
+              autoFocus
               className={cn(
                 "h-9 text-sm focus:ring-0.5 focus:ring-emerald-500 focus:border-emerald-500 border-border",
                 error &&

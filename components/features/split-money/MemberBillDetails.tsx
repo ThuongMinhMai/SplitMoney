@@ -7,11 +7,11 @@ import { TrendingUp } from "lucide-react";
 import { useMemberBillDetails } from "@/hooks/use-member-bill-details";
 import { useI18n } from "@/context/i18n-context";
 import { MemberRow } from "./member-bill-details/member-row";
-import type { Member, Bill } from "./types";
+import type { IMember, IBill } from "./types";
 
 interface MemberBillDetailsProps {
-  members: Member[];
-  bills: Bill[];
+  members: IMember[];
+  bills: IBill[];
 }
 
 export function MemberBillDetails({ members, bills }: MemberBillDetailsProps) {

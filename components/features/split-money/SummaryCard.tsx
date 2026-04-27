@@ -11,32 +11,35 @@ import { BarChart3, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar } from "./Avatar";
 import { formatMoney } from "./utils";
-import type { MemberSummary } from "./types";
+import type { IMemberSummary } from "./types";
 import { CardCustom } from "@/components/ui/card-custom";
 import { useI18n } from "@/context/i18n-context";
 
 interface SummaryCardProps {
-  summaries: MemberSummary[];
+  summaries: IMemberSummary[];
   hasBills: boolean;
 }
 
 export function SummaryCard({ summaries, hasBills }: SummaryCardProps) {
   const { t } = useI18n();
   return (
-    <CardCustom className="shadow-sm hover:shadow-md transition-all" data-tour="summary-card">
+    <CardCustom
+      className="shadow-sm hover:shadow-md transition-all"
+      data-tour="summary-card"
+    >
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-sm font-semibold">
           <div className="p-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
             <BarChart3 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          {t('summary.title')}
+          {t("summary.title")}
         </CardTitle>
       </CardHeader>
       <CardContent>
         {!hasBills || summaries.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground text-sm space-y-1">
             <TrendingUp className="h-10 w-10 mx-auto opacity-30 mb-2" />
-            <p>{t('summary.addHint')}</p>
+            <p>{t("summary.addHint")}</p>
           </div>
         ) : (
           <div className="overflow-x-auto -mx-1">
@@ -44,16 +47,16 @@ export function SummaryCard({ summaries, hasBills }: SummaryCardProps) {
               <TableHeader>
                 <TableRow className="hover:bg-transparent border-b-2">
                   <TableHead className="text-xs font-semibold">
-                    {t('common.members')}
+                    {t("common.members")}
                   </TableHead>
                   <TableHead className="text-xs text-right font-semibold">
-                    {t('summary.paid')}
+                    {t("summary.paid")}
                   </TableHead>
                   <TableHead className="text-xs text-right font-semibold">
-                    {t('summary.used')}
+                    {t("summary.used")}
                   </TableHead>
                   <TableHead className="text-xs text-right font-semibold">
-                    {t('summary.balance')}
+                    {t("summary.balance")}
                   </TableHead>
                 </TableRow>
               </TableHeader>
