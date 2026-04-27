@@ -1,19 +1,18 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
-import { Users } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
-  FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useI18n } from "@/context/i18n-context";
 import type { BillFormValues } from "@/lib/validations";
+import { Users } from "lucide-react";
+import { useFormContext } from "react-hook-form";
 import { Avatar } from "../../Avatar";
 import { IMember } from "../../types";
-import { useI18n } from "@/context/i18n-context";
 
 interface ParticipantsFieldProps {
   members: IMember[];

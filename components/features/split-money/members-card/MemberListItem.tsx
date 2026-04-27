@@ -1,8 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import { Avatar } from "../Avatar";
-import type { IMember } from "../types";
-import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,6 +9,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
+import { toast } from "sonner";
+import { Avatar } from "../Avatar";
+import type { IMember } from "../types";
 
 interface MemberListItemProps {
   member: IMember;

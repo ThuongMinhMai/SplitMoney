@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, Link2, Share2 } from "lucide-react";
+import { useState } from "react";
 
 interface ShareBarProps {
   memberName?: string;
-  t?: (key: string) => string; // For i18n later
+  t?: (key: string) => string;
 }
 
 export function ShareBar({ memberName }: ShareBarProps) {

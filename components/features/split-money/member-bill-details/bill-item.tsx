@@ -1,11 +1,11 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { User, UserCheck, Receipt } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { formatMoneyFull } from "../utils";
-import type { IBillDetail } from "../types";
 import { useI18n } from "@/context/i18n-context";
+import { cn } from "@/lib/utils";
+import { User, UserCheck } from "lucide-react";
+import type { IBillDetail } from "../types";
+import { formatMoneyFull } from "../utils";
 
 interface BillItemProps {
   bill: IBillDetail;

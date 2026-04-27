@@ -2,13 +2,12 @@
 
 import { useI18n } from "@/context/i18n-context";
 import { ScanBarcode } from "lucide-react";
-import type { IMemberBillDetail } from "./types";
 import { mergeBills } from "./member-bill-content/utils";
-import { WIDTH, zigzagBottom, zigzagTop } from "./member-bill-receipt/utils";
-import { Barcode } from "./member-bill-receipt/Barcode";
 import { BillItem } from "./member-bill-receipt/BillItem";
-import { ReceiptTotals } from "./member-bill-receipt/ReceiptTotals";
 import { ReceiptBalance } from "./member-bill-receipt/ReceiptBalance";
+import { ReceiptTotals } from "./member-bill-receipt/ReceiptTotals";
+import { WIDTH, zigzagBottom, zigzagTop } from "./member-bill-receipt/utils";
+import type { IMemberBillDetail } from "./types";
 
 interface IMemberBillReceiptProps {
   data: IMemberBillDetail;

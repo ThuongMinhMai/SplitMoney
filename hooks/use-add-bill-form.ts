@@ -1,10 +1,12 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { billSchema, type BillFormValues } from "@/lib/validations";
-import type { Bill } from "../components/features/split-money/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import type { IBill } from "../components/features/split-money/types";
 
-export function useAddBillForm(onAdd: (bill: Omit<Bill, "id">) => void, onClose: () => void) {
+export function useAddBillForm(
+  onAdd: (bill: Omit<IBill, "id">) => void,
+  onClose: () => void,
+) {
   const form = useForm<BillFormValues>({
     resolver: zodResolver(billSchema),
     defaultValues: {
@@ -22,12 +24,11 @@ export function useAddBillForm(onAdd: (bill: Omit<Bill, "id">) => void, onClose:
   const participants = watch("participants");
   const customAmounts = watch("customAmounts") || {};
 
-
   const onSubmit = (data: BillFormValues) => {
     const cleanedCustomAmounts: Record<string, number> = {};
-    
+
     if (data.splitType === "custom" && data.customAmounts) {
-      data.participants.forEach(pid => {
+      data.participants.forEach((pid) => {
         cleanedCustomAmounts[pid] = data.customAmounts![pid] || 0;
       });
     }

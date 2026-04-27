@@ -3,10 +3,10 @@
 import { Badge } from "@/components/ui/badge";
 import { QrCode, Receipt, RefreshCw } from "lucide-react";
 import { Avatar } from "./Avatar";
-import type { IMemberBillDetail } from "./types";
-import { getBillIcon, mergeBills } from "./member-bill-content/utils";
-import { SmartBillCard } from "./member-bill-content/SmartBillCard";
 import { BalanceSummary } from "./member-bill-content/BalanceSummary";
+import { SmartBillCard } from "./member-bill-content/SmartBillCard";
+import { getBillIcon, mergeBills } from "./member-bill-content/utils";
+import type { IMemberBillDetail } from "./types";
 
 interface MemberBillContentProps {
   data: IMemberBillDetail;

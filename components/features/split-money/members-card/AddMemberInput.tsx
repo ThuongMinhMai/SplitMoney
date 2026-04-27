@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Plus, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { CustomInput } from "@/components/ui/custom-input";
 import { cn } from "@/lib/utils";
+import { AlertCircle, Plus } from "lucide-react";
 
 interface AddMemberInputProps {
   newMemberName: string;
@@ -33,7 +33,7 @@ export function AddMemberInput({
           autoFocus
           className={cn(
             "h-9 text-sm focus:ring-0.5 focus:ring-emerald-500 focus:border-emerald-500 border-border",
-            error && "border-red-500 focus:ring-red-500 focus:border-red-500"
+            error && "border-red-500 focus:ring-red-500 focus:border-red-500",
           )}
         />
         <Button

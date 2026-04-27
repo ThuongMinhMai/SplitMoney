@@ -13,13 +13,15 @@ export function ReceiptBalance({ balance, isPositive }: ReceiptBalanceProps) {
     <div
       className={cn(
         "mx-6 mb-4 p-4 rounded-sm text-center border",
-        isPositive ? "bg-[#EAF3DE] border-[#C0DD97]" : "bg-[#FCEBEB] border-[#F7C1C1]"
+        isPositive
+          ? "bg-[#EAF3DE] border-[#C0DD97]"
+          : "bg-[#FCEBEB] border-[#F7C1C1]",
       )}
     >
       <div
         className={cn(
           "text-[9px] uppercase tracking-[0.15em] mb-1 font-sans",
-          isPositive ? "text-[#27500A]" : "text-[#791F1F]"
+          isPositive ? "text-[#27500A]" : "text-[#791F1F]",
         )}
       >
         {isPositive ? t("receipt.groupOwesYou") : t("receipt.youOweGroup")}
@@ -27,7 +29,7 @@ export function ReceiptBalance({ balance, isPositive }: ReceiptBalanceProps) {
       <div
         className={cn(
           "text-[26px] font-medium font-mono",
-          isPositive ? "text-[#27500A]" : "text-[#791F1F]"
+          isPositive ? "text-[#27500A]" : "text-[#791F1F]",
         )}
       >
         {formatMoneyFull(Math.abs(balance))}
@@ -35,7 +37,7 @@ export function ReceiptBalance({ balance, isPositive }: ReceiptBalanceProps) {
       <div
         className={cn(
           "text-[10px] mt-1 font-sans",
-          isPositive ? "text-[#3B6D11]" : "text-[#A32D2D]"
+          isPositive ? "text-[#3B6D11]" : "text-[#A32D2D]",
         )}
       >
         {isPositive

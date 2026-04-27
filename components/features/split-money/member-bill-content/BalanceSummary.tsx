@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { formatMoneyFull } from "../utils";
 
-interface BalanceSummaryProps {
+interface IBalanceSummaryProps {
   totalPaid: number;
   totalUsed: number;
   balance: number;
@@ -13,7 +13,7 @@ export function BalanceSummary({
   totalUsed,
   balance,
   isPositive,
-}: BalanceSummaryProps) {
+}: IBalanceSummaryProps) {
   return (
     <div className="px-5 py-4 border-b border-dashed border-zinc-200">
       <div className="grid grid-cols-2 gap-3">

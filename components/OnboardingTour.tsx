@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useI18n } from "@/context/i18n-context";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
-import { useI18n } from "@/context/i18n-context";
+import { useEffect, useRef } from "react";
 import { createRoot, Root } from "react-dom/client";
 import { celebrateTourComplete } from "./tour/celebrate";
-import { getTourSteps } from "./tour/tour-steps";
 import { PopoverContent } from "./tour/PopoverContent";
+import { getTourSteps } from "./tour/tour-steps";
 
 export function OnboardingTour() {
   const { t } = useI18n();
@@ -39,7 +39,9 @@ export function OnboardingTour() {
             if (!container) return;
 
             const isMobile = window.innerWidth < 640;
-            const targetWidth = isMobile ? `${window.innerWidth - 48}px` : "320px";
+            const targetWidth = isMobile
+              ? `${window.innerWidth - 48}px`
+              : "320px";
             container.style.width = targetWidth;
             container.style.maxWidth = targetWidth;
             container.style.minHeight = "160px";
@@ -68,8 +70,12 @@ export function OnboardingTour() {
                 t={t}
                 onClose={() => driverObj.destroy()}
                 onPrev={() => driverObj.movePrevious()}
-                onNext={() => (stepIndex === totalSteps - 1 ? driverObj.destroy() : driverObj.moveNext())}
-              />
+                onNext={() =>
+                  stepIndex === totalSteps - 1
+                    ? driverObj.destroy()
+                    : driverObj.moveNext()
+                }
+              />,
             );
           },
           steps: getTourSteps(t),

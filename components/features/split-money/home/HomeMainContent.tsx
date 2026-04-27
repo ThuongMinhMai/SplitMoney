@@ -1,15 +1,20 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Banknote, ReceiptText, UserRound } from "lucide-react";
-import { StatCard } from "@/components/features/split-money/StatCard";
-import { MembersCard } from "@/components/features/split-money/MembersCard";
 import { BillsCard } from "@/components/features/split-money/BillsCard";
+import { MemberBillDetails } from "@/components/features/split-money/MemberBillDetails";
+import { MembersCard } from "@/components/features/split-money/MembersCard";
+import { StatCard } from "@/components/features/split-money/StatCard";
 import { SummaryCard } from "@/components/features/split-money/SummaryCard";
 import { TransactionsCard } from "@/components/features/split-money/TransactionsCard";
-import { MemberBillDetails } from "@/components/features/split-money/MemberBillDetails";
+import type {
+  IBill,
+  IMember,
+  IMemberSummary,
+  ITransaction,
+} from "@/components/features/split-money/types";
 import { formatMoney } from "@/components/features/split-money/utils";
-import type { IMember, IBill, ITransaction, IMemberSummary } from "@/components/features/split-money/types";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Banknote, ReceiptText, UserRound } from "lucide-react";
 
-interface HomeMainContentProps {
+interface IHomeMainContentProps {
   t: (key: string) => string;
   totalSpent: number;
   members: IMember[];
@@ -35,10 +40,13 @@ export function HomeMainContent({
   handleAddMember,
   removeMember,
   removeBill,
-}: HomeMainContentProps) {
+}: IHomeMainContentProps) {
   return (
     <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-20">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6" data-tour="stats">
+      <div
+        className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6"
+        data-tour="stats"
+      >
         <StatCard
           label={t("common.totalSpent")}
           value={formatMoney(totalSpent)}

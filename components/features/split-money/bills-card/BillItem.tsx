@@ -1,17 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "sonner";
-import {
-  Receipt,
-  Trash2,
-  Coffee,
-  Car,
-  Music,
-  Beer,
-  Utensils,
-} from "lucide-react";
-import { formatMoney, getBillIcon } from "../utils";
-import type { IBill, IMember } from "../types";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,6 +9,20 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Beer,
+  Car,
+  Coffee,
+  Music,
+  Receipt,
+  Trash2,
+  Utensils,
+} from "lucide-react";
+import { toast } from "sonner";
+import type { IBill, IMember } from "../types";
+import { formatMoney, getBillIcon } from "../utils";
 
 const iconMap = {
   Coffee: Coffee,
@@ -33,14 +33,14 @@ const iconMap = {
   Receipt: Receipt,
 };
 
-interface BillItemProps {
+interface IBillItemProps {
   bill: IBill;
   members: IMember[];
   onRemove: (id: string) => void;
   t: (key: string) => string;
 }
 
-export function BillItem({ bill, members, onRemove, t }: BillItemProps) {
+export function BillItem({ bill, members, onRemove, t }: IBillItemProps) {
   const payer = members.find((m) => m.id === bill.paidBy);
   const IconComponent =
     iconMap[getBillIcon(bill.name) as keyof typeof iconMap] || Receipt;

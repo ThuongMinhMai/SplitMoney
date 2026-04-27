@@ -31,7 +31,7 @@ export function ReceiptTotals({
         <span
           className={cn(
             "font-mono",
-            isPositive ? "text-[#27500A]" : "text-[#791F1F]"
+            isPositive ? "text-[#27500A]" : "text-[#791F1F]",
           )}
         >
           {isPositive ? "+" : "−"} {formatMoneyFull(Math.abs(balance))}

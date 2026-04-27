@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardCustom } from "@/components/ui/card-custom";
 import {
   Table,
   TableBody,
@@ -7,13 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { BarChart3, TrendingUp } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Avatar } from "./Avatar";
-import { formatMoney } from "./utils";
-import type { IMemberSummary } from "./types";
-import { CardCustom } from "@/components/ui/card-custom";
 import { useI18n } from "@/context/i18n-context";
+import { cn } from "@/lib/utils";
+import { BarChart3, TrendingUp } from "lucide-react";
+import { Avatar } from "./Avatar";
+import type { IMemberSummary } from "./types";
+import { formatMoney } from "./utils";
 
 interface SummaryCardProps {
   summaries: IMemberSummary[];

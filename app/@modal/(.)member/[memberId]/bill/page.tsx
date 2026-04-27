@@ -1,5 +1,7 @@
 "use client";
 
+import { ShareBar } from "@/components/features/split-money/member-bill-details/ShareBar";
+import { MemberBillReceipt } from "@/components/features/split-money/MemberBillReceipt";
 import type { IMemberBillDetail } from "@/components/features/split-money/types";
 import {
   Dialog,
@@ -10,16 +12,14 @@ import {
 import { Receipt } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ShareBar } from "@/components/features/split-money/member-bill-details/ShareBar";
-import { MemberBillReceipt } from "@/components/features/split-money/MemberBillReceipt";
 
-interface InterceptedModalPageProps {
+interface IInterceptedModalPageProps {
   searchParams: Promise<{ data?: string }>;
 }
 
 export default function InterceptedBillModal({
   searchParams,
-}: InterceptedModalPageProps) {
+}: IInterceptedModalPageProps) {
   const router = useRouter();
   const [memberData, setMemberData] = useState<IMemberBillDetail | null>(null);
   const [open, setOpen] = useState(true);

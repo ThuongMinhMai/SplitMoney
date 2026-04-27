@@ -9,7 +9,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-interface ExitConfirmDialogProps {
+interface IExitConfirmDialogProps {
   t: (key: string) => string;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
@@ -21,7 +21,7 @@ export function ExitConfirmDialog({
   isOpen,
   onOpenChange,
   onConfirm,
-}: ExitConfirmDialogProps) {
+}: IExitConfirmDialogProps) {
   return (
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
       <AlertDialogContent>

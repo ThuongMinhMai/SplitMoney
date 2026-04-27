@@ -1,21 +1,21 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
-import { FormLabel, FormMessage } from "@/components/ui/form";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { FormLabel, FormMessage } from "@/components/ui/form";
 import { MoneyInput } from "@/components/ui/money-input";
+import { useI18n } from "@/context/i18n-context";
 import type { BillFormValues } from "@/lib/validations";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { useFormContext } from "react-hook-form";
 import { Avatar } from "../../Avatar";
 import type { IMember } from "../../types";
 import { formatMoneyFull } from "../../utils";
-import { useI18n } from "@/context/i18n-context";
 
-interface CustomAmountsSectionProps {
+interface ICustomAmountsSectionProps {
   members: IMember[];
 }
 
-export function CustomAmountsSection({ members }: CustomAmountsSectionProps) {
+export function CustomAmountsSection({ members }: ICustomAmountsSectionProps) {
   const { t } = useI18n();
   const {
     watch,

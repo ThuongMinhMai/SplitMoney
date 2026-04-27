@@ -1,10 +1,15 @@
-import { useState, useCallback, useMemo } from "react";
+import type {
+  IBill,
+  IMember,
+  IMemberSummary,
+  ITransaction,
+} from "@/components/features/split-money/types";
 import { uid } from "@/components/features/split-money/utils";
-import type { Member, Bill, Transaction, MemberSummary } from "@/components/features/split-money/types";
+import { useCallback, useMemo, useState } from "react";
 
 export function useSplitMoney() {
-  const [members, setMembers] = useState<Member[]>([]);
-  const [bills, setBills] = useState<Bill[]>([]);
+  const [members, setMembers] = useState<IMember[]>([]);
+  const [bills, setBills] = useState<IBill[]>([]);
 
   const addMember = useCallback((name: string) => {
     const trimmedName = name.trim();
@@ -15,11 +20,11 @@ export function useSplitMoney() {
   const removeMember = useCallback((id: string) => {
     setMembers((prev) => prev.filter((m) => m.id !== id));
     setBills((prev) =>
-      prev.filter((b) => b.paidBy !== id && !b.participants.includes(id))
+      prev.filter((b) => b.paidBy !== id && !b.participants.includes(id)),
     );
   }, []);
 
-  const addBill = useCallback((billData: Omit<Bill, "id">) => {
+  const addBill = useCallback((billData: Omit<IBill, "id">) => {
     setBills((prev) => [...prev, { ...billData, id: uid() }]);
   }, []);
 
@@ -27,8 +32,8 @@ export function useSplitMoney() {
     setBills((prev) => prev.filter((b) => b.id !== id));
   }, []);
 
-  const summaries = useMemo((): MemberSummary[] => {
-    const map: Record<string, MemberSummary> = {};
+  const summaries = useMemo((): IMemberSummary[] => {
+    const map: Record<string, IMemberSummary> = {};
     members.forEach((m) => {
       map[m.id] = { id: m.id, name: m.name, paid: 0, used: 0, balance: 0 };
     });
@@ -49,7 +54,7 @@ export function useSplitMoney() {
     return Object.values(map);
   }, [members, bills]);
 
-  const transactions = useMemo((): Transaction[] => {
+  const transactions = useMemo((): ITransaction[] => {
     const sums = summaries;
     const debtors = sums
       .filter((s) => s.balance < -0.5)
@@ -59,7 +64,7 @@ export function useSplitMoney() {
       .filter((s) => s.balance > 0.5)
       .sort((a, b) => b.balance - a.balance)
       .map((s) => ({ ...s }));
-    const txs: Transaction[] = [];
+    const txs: ITransaction[] = [];
     let i = 0,
       j = 0;
     while (i < debtors.length && j < creditors.length) {
@@ -75,7 +80,10 @@ export function useSplitMoney() {
     return txs;
   }, [summaries]);
 
-  const totalSpent = useMemo(() => bills.reduce((a, b) => a + b.totalAmount, 0), [bills]);
+  const totalSpent = useMemo(
+    () => bills.reduce((a, b) => a + b.totalAmount, 0),
+    [bills],
+  );
 
   return {
     members,

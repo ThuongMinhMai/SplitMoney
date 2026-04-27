@@ -1,9 +1,5 @@
 "use client";
 
-import * as React from "react";
-import { Moon, Sun, Languages, Check } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useI18n } from "@/context/i18n-context";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,6 +7,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useI18n } from "@/context/i18n-context";
+import { Check, Languages, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme();
@@ -62,7 +61,7 @@ export function LanguageToggle() {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <Button 
+        <Button
           variant="ghost"
           size="icon"
           className="h-9 w-9 rounded-xl relative"

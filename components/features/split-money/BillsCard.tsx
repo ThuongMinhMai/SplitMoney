@@ -1,12 +1,12 @@
 "use client";
 
-import { CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Receipt } from "lucide-react";
-import type { IBill, IMember } from "./types";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardCustom } from "@/components/ui/card-custom";
 import { useI18n } from "@/context/i18n-context";
+import { Receipt } from "lucide-react";
 import { BillItem } from "./bills-card/BillItem";
+import type { IBill, IMember } from "./types";
 
 interface BillsCardProps {
   bills: IBill[];

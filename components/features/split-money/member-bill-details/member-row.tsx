@@ -1,13 +1,13 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { ChevronDown, ChevronUp, Receipt, User, Eye } from "lucide-react";
+import { useI18n } from "@/context/i18n-context";
+import { ChevronDown, ChevronUp, Eye, Receipt, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar } from "../Avatar";
+import type { IMemberBillDetail } from "../types";
 import { formatMoneyFull } from "../utils";
 import { BillItem } from "./bill-item";
-import type { IMemberBillDetail } from "../types";
-import { useI18n } from "@/context/i18n-context";
 
 interface MemberRowProps {
   member: IMemberBillDetail;

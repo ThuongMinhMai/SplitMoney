@@ -1,7 +1,6 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
-import { Receipt, DollarSign, Users } from "lucide-react";
+import { CustomInput } from "@/components/ui/custom-input";
 import {
   FormControl,
   FormField,
@@ -9,7 +8,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { CustomInput } from "@/components/ui/custom-input";
 import { MoneyInput } from "@/components/ui/money-input";
 import {
   Select,
@@ -18,16 +16,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useI18n } from "@/context/i18n-context";
 import type { BillFormValues } from "@/lib/validations";
+import { DollarSign, Receipt, Users } from "lucide-react";
+import { useFormContext } from "react-hook-form";
 import { Avatar } from "../../Avatar";
 import { IMember } from "../../types";
-import { useI18n } from "@/context/i18n-context";
 
-interface BillInfoFieldsProps {
+interface IBillInfoFieldsProps {
   members: IMember[];
 }
 
-export function BillInfoFields({ members }: BillInfoFieldsProps) {
+export function BillInfoFields({ members }: IBillInfoFieldsProps) {
   const { t } = useI18n();
   const { control } = useFormContext<BillFormValues>();
 

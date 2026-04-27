@@ -1,3 +1,6 @@
+import { AddBillForm } from "@/components/features/split-money/AddBillForm";
+import type { IBill, IMember } from "@/components/features/split-money/types";
+import { LanguageToggle, ThemeToggle } from "@/components/settings-toggles";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -7,12 +10,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Plus } from "lucide-react";
-import { AddBillForm } from "@/components/features/split-money/AddBillForm";
 import Image from "next/image";
-import { ThemeToggle, LanguageToggle } from "@/components/settings-toggles";
-import type { IMember, IBill } from "@/components/features/split-money/types";
 
-interface HomeHeaderProps {
+interface IHomeHeaderProps {
   t: (key: string) => string;
   isSheetOpen: boolean;
   onSheetOpenChange: (open: boolean) => void;
@@ -30,7 +30,7 @@ export function HomeHeader({
   onAddBill,
   isFormDirty,
   setIsFormDirty,
-}: HomeHeaderProps) {
+}: IHomeHeaderProps) {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 border-b backdrop-blur-md shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">

@@ -1,13 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import "@/lib/i18n";
 import i18n from "@/lib/i18n";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface I18nContextType {
   language: string;
-  t: any; // Using any for the t function from i18next
+  t: any;
   setLanguage: (lang: "vi" | "en") => void;
 }
 

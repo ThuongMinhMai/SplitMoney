@@ -1,9 +1,14 @@
+import type {
+  IBill,
+  IBillDetail,
+  IMember,
+  IMemberBillDetail,
+} from "@/components/features/split-money/types";
 import { useMemo } from "react";
-import type { Member, Bill, MemberBillDetail, BillDetail } from "@/components/features/split-money/types";
 
-export function useMemberBillDetails(members: Member[], bills: Bill[]) {
-  const memberDetails = useMemo((): MemberBillDetail[] => {
-    const details: MemberBillDetail[] = members.map((member) => ({
+export function useMemberBillDetails(members: IMember[], bills: IBill[]) {
+  const memberDetails = useMemo((): IMemberBillDetail[] => {
+    const details: IMemberBillDetail[] = members.map((member) => ({
       memberId: member.id,
       memberName: member.name,
       billsPaid: [],
@@ -13,7 +18,7 @@ export function useMemberBillDetails(members: Member[], bills: Bill[]) {
     bills.forEach((bill) => {
       const payer = members.find((m) => m.id === bill.paidBy);
 
-      const billDetail: BillDetail = {
+      const billDetail: IBillDetail = {
         billId: bill.id,
         billName: bill.name,
         totalAmount: bill.totalAmount,
@@ -30,7 +35,8 @@ export function useMemberBillDetails(members: Member[], bills: Bill[]) {
         if (bill.splitType === "equal") {
           amount = bill.totalAmount / bill.participants.length;
         } else {
-          amount = (bill.customAmounts && bill.customAmounts[participantId]) || 0;
+          amount =
+            (bill.customAmounts && bill.customAmounts[participantId]) || 0;
         }
 
         billDetail.participantShares.push({

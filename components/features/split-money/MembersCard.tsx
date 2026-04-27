@@ -1,16 +1,16 @@
 "use client";
 
-import { CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Users } from "lucide-react";
-import type { IMember } from "./types";
-import { useMemberValidation } from "@/hooks/use-member-validation";
-import { toast } from "sonner";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardCustom } from "@/components/ui/card-custom";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useI18n } from "@/context/i18n-context";
+import { useMemberValidation } from "@/hooks/use-member-validation";
+import { Users } from "lucide-react";
+import { toast } from "sonner";
 import { AddMemberInput } from "./members-card/AddMemberInput";
 import { MemberListItem } from "./members-card/MemberListItem";
+import type { IMember } from "./types";
 
 interface MembersCardProps {
   members: IMember[];
