@@ -54,29 +54,41 @@ export function ThemeToggle() {
 export function LanguageToggle() {
   const { language, setLanguage } = useI18n();
 
+  const languages = [
+    { code: "vi", label: "Tiếng Việt", flag: "🇻🇳" },
+    { code: "en", label: "English", flag: "🇺🇸" },
+  ];
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl">
+        <Button 
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9 rounded-xl relative"
+        >
           <Languages className="h-[1.2rem] w-[1.2rem]" />
+          {/* Badge nhỏ hiển thị cờ hiện tại ở góc nút (tùy chọn) */}
+          <span className="absolute -top-1 -right-1 text-[10px]">
+            {language === "vi" ? "🇻🇳" : "🇺🇸"}
+          </span>
           <span className="sr-only">Toggle language</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem
-          onClick={() => setLanguage("vi")}
-          className="cursor-pointer"
-        >
-          Tiếng Việt
-          {language === "vi" && <Check className="ml-auto h-4 w-4" />}
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => setLanguage("en")}
-          className="cursor-pointer"
-        >
-          English
-          {language === "en" && <Check className="ml-auto h-4 w-4" />}
-        </DropdownMenuItem>
+      <DropdownMenuContent align="end" className="w-[150px]">
+        {languages.map((lang) => (
+          <DropdownMenuItem
+            key={lang.code}
+            onClick={() => setLanguage(lang.code as "vi" | "en")}
+            className="cursor-pointer flex items-center gap-3"
+          >
+            <span className="text-lg leading-none">{lang.flag}</span>
+            <span className="flex-1 font-medium">{lang.label}</span>
+            {language === lang.code && (
+              <Check className="h-4 w-4 text-emerald-600" />
+            )}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

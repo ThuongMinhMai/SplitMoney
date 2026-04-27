@@ -28,7 +28,8 @@ export function MembersCard({
   onRemove,
 }: MembersCardProps) {
   const { t } = useI18n();
-  const { error, validateMemberName, clearError } = useMemberValidation(members);
+  const { error, validateMemberName, clearError } =
+    useMemberValidation(members);
 
   const handleAdd = () => {
     if (validateMemberName(newMemberName)) {
@@ -43,7 +44,11 @@ export function MembersCard({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
     if (e.key === "Enter") {
+      e.preventDefault();
       handleAdd();
     }
   };
