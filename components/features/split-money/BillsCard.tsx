@@ -12,9 +12,10 @@ interface BillsCardProps {
   bills: IBill[];
   members: IMember[];
   onRemove: (id: string) => void;
+  onEdit: (bill: IBill) => void;
 }
 
-export function BillsCard({ bills, members, onRemove }: BillsCardProps) {
+export function BillsCard({ bills, members, onRemove, onEdit }: BillsCardProps) {
   const { t } = useI18n();
   if (bills.length === 0) {
     return (
@@ -63,6 +64,7 @@ export function BillsCard({ bills, members, onRemove }: BillsCardProps) {
                 bill={bill}
                 members={members}
                 onRemove={onRemove}
+                onEdit={onEdit}
                 t={t}
               />
             ))}

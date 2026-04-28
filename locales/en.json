@@ -6,6 +6,7 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "save": "Save",
+    "edit": "Edit",
     "delete": "Delete",
     "back": "Back",
     "totalSpent": "Total Spent",
@@ -61,6 +62,7 @@
       "amountRequired": "Please enter an amount for all participants"
     },
     "title": "Add New Bill",
+    "editTitle": "Edit Bill",
     "noBills": "No bills yet",
     "addHint": "Add a bill to start",
     "name": "Bill Name",
@@ -73,6 +75,7 @@
     "splitEqual": "Equal",
     "splitCustom": "Custom",
     "added": "Bill added",
+    "updated": "Bill updated",
     "removed": "Bill removed",
     "paid": "Paid",
     "used": "Used",

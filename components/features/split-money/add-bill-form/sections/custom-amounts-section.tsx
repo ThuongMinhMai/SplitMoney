@@ -124,8 +124,8 @@ export function CustomAmountsSection({ members }: ICustomAmountsSectionProps) {
               <div
                 className={`h-10 px-3 flex items-center justify-start rounded-md border font-mono font-bold text-sm transition-all ${
                   isCustomTotalValid
-                    ? "border-emerald-200 bg-emerald-50/50 text-emerald-700"
-                    : "border-red-200 bg-red-50/50 text-red-600"
+                    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                    : "border-red-200 bg-red-50 text-red-600"
                 }`}
               >
                 {formatMoneyFull(currentTotalCustom)}

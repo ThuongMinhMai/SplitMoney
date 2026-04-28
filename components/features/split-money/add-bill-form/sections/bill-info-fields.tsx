@@ -85,7 +85,11 @@ export function BillInfoFields({ members }: IBillInfoFieldsProps) {
               <Users className="h-3.5 w-3.5" />
               {t("bills.paidBy")}
             </FormLabel>
-            <Select onValueChange={field.onChange} value={field.value}>
+            <Select
+              onValueChange={field.onChange}
+              defaultValue={field.value}
+              key={field.value}
+            >
               <FormControl>
                 <SelectTrigger className="focus:ring-2 focus:ring-emerald-500 border-border h-11">
                   <SelectValue placeholder={t("bills.selectPayer")} />

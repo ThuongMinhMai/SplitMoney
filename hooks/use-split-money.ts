@@ -28,6 +28,12 @@ export function useSplitMoney() {
     setBills((prev) => [...prev, { ...billData, id: uid() }]);
   }, []);
 
+  const updateBill = useCallback((id: string, billData: Omit<IBill, "id">) => {
+    setBills((prev) =>
+      prev.map((bill) => (bill.id === id ? { ...bill, ...billData, id } : bill)),
+    );
+  }, []);
+
   const removeBill = useCallback((id: string) => {
     setBills((prev) => prev.filter((b) => b.id !== id));
   }, []);
@@ -91,6 +97,7 @@ export function useSplitMoney() {
     addMember,
     removeMember,
     addBill,
+    updateBill,
     removeBill,
     summaries,
     transactions,

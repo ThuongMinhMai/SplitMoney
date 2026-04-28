@@ -16,6 +16,7 @@ export default function Home() {
     addMember,
     removeMember,
     addBill,
+    updateBill,
     removeBill,
     summaries,
     transactions,
@@ -28,6 +29,7 @@ export default function Home() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isFormDirty, setIsFormDirty] = useState(false);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const [editingBill, setEditingBill] = useState<IBill | null>(null);
   const isSubmittingRef = useRef(false);
 
   const handleSheetOpenChange = (open: boolean) => {
@@ -39,6 +41,7 @@ export default function Home() {
     if (!open) {
       setIsFormDirty(false);
       isSubmittingRef.current = false;
+      setEditingBill(null);
     }
   };
 
@@ -50,12 +53,27 @@ export default function Home() {
   const handleAddBill = useCallback(
     (billData: Omit<IBill, "id">) => {
       isSubmittingRef.current = true;
-      addBill(billData);
+      if (editingBill) {
+        updateBill(editingBill.id, billData);
+      } else {
+        addBill(billData);
+      }
       setIsFormDirty(false);
       setIsSheetOpen(false);
     },
-    [addBill],
+    [addBill, editingBill, updateBill],
   );
+
+  const handleStartAddBill = useCallback(() => {
+    setEditingBill(null);
+  }, []);
+
+  const handleEditBill = useCallback((bill: IBill) => {
+    isSubmittingRef.current = false;
+    setEditingBill(bill);
+    setIsFormDirty(false);
+    setIsSheetOpen(true);
+  }, []);
 
   const handleExitConfirm = useCallback(() => {
     setIsFormDirty(false);
@@ -73,6 +91,8 @@ export default function Home() {
         onSheetOpenChange={handleSheetOpenChange}
         members={members}
         onAddBill={handleAddBill}
+        editingBill={editingBill}
+        onStartAddBill={handleStartAddBill}
         isFormDirty={isFormDirty}
         setIsFormDirty={setIsFormDirty}
       />
@@ -89,6 +109,7 @@ export default function Home() {
         handleAddMember={handleAddMember}
         removeMember={removeMember}
         removeBill={removeBill}
+        editBill={handleEditBill}
       />
 
       <ExitConfirmDialog 

@@ -15,10 +15,12 @@ import {
   Beer,
   Car,
   Coffee,
+  Pencil,
   Music,
   Receipt,
   Trash2,
   Utensils,
+  Brush,
 } from "lucide-react";
 import { toast } from "sonner";
 import type { IBill, IMember } from "../types";
@@ -38,10 +40,11 @@ interface IBillItemProps {
   bill: IBill;
   members: IMember[];
   onRemove: (id: string) => void;
+  onEdit: (bill: IBill) => void;
   t: (key: string) => string;
 }
 
-export function BillItem({ bill, members, onRemove, t }: IBillItemProps) {
+export function BillItem({ bill, members, onRemove, onEdit, t }: IBillItemProps) {
   const payer = members.find((m) => m.id === bill.paidBy);
   const IconComponent =
     iconMap[getBillIcon(bill.name) as keyof typeof iconMap] || Receipt;
@@ -63,6 +66,15 @@ export function BillItem({ bill, members, onRemove, t }: IBillItemProps) {
             {/* {formatMoney(bill.totalAmount)} */}
             {formatMoneyFull(bill.totalAmount)}
           </span>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-6 w-6 text-muted-foreground hover:text-foreground"
+            onClick={() => onEdit(bill)}
+            aria-label={t("common.edit")}
+          >
+            <Brush  className="h-3 w-3" />
+          </Button>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button

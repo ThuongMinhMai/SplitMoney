@@ -27,6 +27,7 @@ interface IHomeMainContentProps {
   handleAddMember: () => void;
   removeMember: (id: string) => void;
   removeBill: (id: string) => void;
+  editBill: (bill: IBill) => void;
 }
 
 export function HomeMainContent({
@@ -41,6 +42,7 @@ export function HomeMainContent({
   handleAddMember,
   removeMember,
   removeBill,
+  editBill,
 }: IHomeMainContentProps) {
   return (
     <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-20">
@@ -101,7 +103,12 @@ export function HomeMainContent({
           </TabsContent>
 
           <TabsContent value="bills" className="mt-0">
-            <BillsCard bills={bills} members={members} onRemove={removeBill} />
+            <BillsCard
+              bills={bills}
+              members={members}
+              onRemove={removeBill}
+              onEdit={editBill}
+            />
           </TabsContent>
 
           <TabsContent value="settle" className="space-y-4 mt-0">
@@ -120,7 +127,12 @@ export function HomeMainContent({
             onAdd={handleAddMember}
             onRemove={removeMember}
           />
-          <BillsCard bills={bills} members={members} onRemove={removeBill} />
+          <BillsCard
+            bills={bills}
+            members={members}
+            onRemove={removeBill}
+            onEdit={editBill}
+          />
         </aside>
 
         <div className="space-y-5">

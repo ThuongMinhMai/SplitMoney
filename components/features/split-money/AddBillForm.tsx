@@ -17,6 +17,7 @@ interface AddBillFormProps {
   onAdd: (bill: Omit<IBill, "id">) => void;
   onClose: () => void;
   onDirtyChange?: (isDirty: boolean) => void;
+  initialBill?: IBill | null;
 }
 
 export function AddBillForm({
@@ -24,13 +25,15 @@ export function AddBillForm({
   onAdd,
   onClose,
   onDirtyChange,
+  initialBill,
 }: AddBillFormProps) {
   const { t } = useI18n();
+  const isEditing = Boolean(initialBill);
 
   const { form, onSubmit } = useAddBillForm((data) => {
     onAdd(data);
-    toast.success(t("bills.added"));
-  }, onClose);
+    toast.success(t(isEditing ? "bills.updated" : "bills.added"));
+  }, onClose, initialBill);
 
   const isDirty = form.formState.isDirty;
 
@@ -59,7 +62,7 @@ export function AddBillForm({
             type="submit"
             className="flex-[2] bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 shadow-md hover:shadow-lg transition-all text-white h-11"
           >
-            {t("common.addBill")}
+            {t(isEditing ? "common.save" : "common.addBill")}
           </Button>
         </div>
       </form>

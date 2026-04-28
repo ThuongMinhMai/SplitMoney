@@ -19,6 +19,8 @@ interface IHomeHeaderProps {
   onSheetOpenChange: (open: boolean) => void;
   members: IMember[];
   onAddBill: (billData: Omit<IBill, "id">) => void;
+  editingBill?: IBill | null;
+  onStartAddBill: () => void;
   isFormDirty: boolean;
   setIsFormDirty: (dirty: boolean) => void;
 }
@@ -29,10 +31,13 @@ export function HomeHeader({
   onSheetOpenChange,
   members,
   onAddBill,
+  editingBill,
+  onStartAddBill,
   isFormDirty,
   setIsFormDirty,
 }: IHomeHeaderProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isEditing = Boolean(editingBill);
   return (
     <header className="fixed top-0 left-0 right-0 z-40 border-b backdrop-blur-md shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
@@ -77,6 +82,7 @@ export function HomeHeader({
               className="bg-gradient-to-r text-white from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 gap-2 shadow-md hover:shadow-lg transition-all"
               disabled={members.length < 2}
               data-tour="add-bill"
+              onClick={onStartAddBill}
             >
               <Plus className="h-4 w-4" />
               <span className="hidden xs:inline">{t("common.addBill")}</span>
@@ -99,7 +105,7 @@ export function HomeHeader({
           >
             <SheetHeader className="mb-5">
               <SheetTitle className="text-left text-xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-800 bg-clip-text text-transparent">
-                {t("bills.title")}
+                {t(isEditing ? "bills.editTitle" : "bills.title")}
               </SheetTitle>
             </SheetHeader>
             <AddBillForm
@@ -107,6 +113,7 @@ export function HomeHeader({
               onAdd={onAddBill}
               onClose={() => onSheetOpenChange(false)}
               onDirtyChange={setIsFormDirty}
+              initialBill={editingBill}
             />
           </SheetContent>
         </Sheet>

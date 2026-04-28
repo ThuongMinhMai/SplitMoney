@@ -6,6 +6,7 @@
     "cancel": "Hủy",
     "confirm": "Xác nhận",
     "save": "Lưu",
+    "edit": "Sửa",
     "delete": "Xóa",
     "back": "Quay lại",
     "totalSpent": "Tổng chi tiêu",
@@ -61,6 +62,7 @@
       "amountRequired": "Vui lòng nhập số tiền cho tất cả người tham gia"
     },
     "title": "Thêm hóa đơn mới",
+    "editTitle": "Chỉnh sửa hóa đơn",
     "noBills": "Chưa có hóa đơn",
     "addHint": "Thêm hóa đơn để bắt đầu",
     "name": "Tên hóa đơn",
@@ -73,6 +75,7 @@
     "splitEqual": "Chia đều",
     "splitCustom": "Tùy chỉnh",
     "added": "Đã thêm hóa đơn",
+    "updated": "Đã cập nhật hóa đơn",
     "removed": "Đã xóa hóa đơn",
     "paid": "Đã trả",
     "used": "Đã dùng",
