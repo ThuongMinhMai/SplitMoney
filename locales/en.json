@@ -37,6 +37,13 @@
       "en": "English"
     }
   },
+  "share": {
+    "title": "Receipt for {{name}}",
+    "description": "View detailed receipt for {{name}} from Split Money",
+    "copyLink": "Copy link",
+    "copied": "Copied!",
+    "shareBtn": "Share"
+  },
   "members": {
     "title": "Members",
     "placeholder": "Enter member name...",
@@ -158,5 +165,21 @@
     "balanceNegativeHint": "You owe the group",
     "footerSlug": "splitmooney.app",
     "footerThanks": "Thank you for using Split Money"
+  },
+  "billModal": {
+    "title": "{{name}}'s statement",
+    "loadingTitle": "Loading...",
+    "loadingText": "Loading statement..."
+  },
+  "billPage": {
+    "statementLabel": "Statement: {{name}}",
+    "notFoundTitle": "Statement not found",
+    "notFoundDescription": "This link is invalid or has expired. Please ask the sender to share a new link.",
+    "backHome": "← Back to home",
+    "meta": {
+      "title": "Personal statement",
+      "titleWithName": "{{name}}'s statement",
+      "descriptionWithName": "Expense details for {{name}}"
+    }
   }
 }

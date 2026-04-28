@@ -1,18 +1,69 @@
 import { MemberBillReceipt } from "@/components/features/split-money/MemberBillReceipt";
 import type { IMemberBillDetail } from "@/components/features/split-money/types";
+import { decodeBillSharePayload } from "@/lib/bill-share-link";
+import en from "@/locales/en.json";
+import vi from "@/locales/vi.json";
 import { Receipt } from "lucide-react";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import Link from "next/link";
 
 interface BillPageProps {
-  searchParams: Promise<{ data?: string }>;
+  searchParams: Promise<{ data?: string; d?: string }>;
   params: Promise<{ memberId: string }>;
+}
+
+type LocaleDict = typeof vi;
+
+function getLocaleFromHeaders(acceptLanguage: string | null): "vi" | "en" {
+  if (!acceptLanguage) return "vi";
+  return acceptLanguage.toLowerCase().startsWith("en") ? "en" : "vi";
+}
+
+function getByPath(obj: unknown, path: string): string {
+  const value = path
+    .split(".")
+    .reduce<unknown>(
+      (acc, segment) =>
+        acc && typeof acc === "object"
+          ? (acc as Record<string, unknown>)[segment]
+          : undefined,
+      obj,
+    );
+  return typeof value === "string" ? value : path;
+}
+
+function translate(
+  dict: LocaleDict,
+  key: string,
+  vars?: Record<string, string>,
+): string {
+  let text = getByPath(dict, key);
+  if (!vars) return text;
+  Object.entries(vars).forEach(([k, v]) => {
+    text = text.replaceAll(`{{${k}}}`, v);
+  });
+  return text;
 }
 
 export async function generateMetadata({
   searchParams,
 }: BillPageProps): Promise<Metadata> {
-  const { data } = await searchParams;
+  const hdrs = await headers();
+  const locale = getLocaleFromHeaders(hdrs.get("accept-language"));
+  const dict = locale === "en" ? en : vi;
+  const { data, d } = await searchParams;
+  if (d) {
+    const decoded = decodeBillSharePayload(d);
+    if (decoded) {
+      return {
+        title: `${translate(dict, "billPage.meta.titleWithName", { name: decoded.memberDetail.memberName })} | ${translate(dict, "common.appName")}`,
+        description: translate(dict, "billPage.meta.descriptionWithName", {
+          name: decoded.memberDetail.memberName,
+        }),
+      };
+    }
+  }
   if (data) {
     try {
       const decodedStr = decodeURIComponent(escape(atob(data)));
@@ -20,21 +71,34 @@ export async function generateMetadata({
         memberDetail: IMemberBillDetail;
       };
       return {
-        title: `Sao kê của ${decoded.memberDetail.memberName} | Split Money Pro`,
-        description: `Chi tiết khoản chi của ${decoded.memberDetail.memberName}`,
+        title: `${translate(dict, "billPage.meta.titleWithName", { name: decoded.memberDetail.memberName })} | ${translate(dict, "common.appName")}`,
+        description: translate(dict, "billPage.meta.descriptionWithName", {
+          name: decoded.memberDetail.memberName,
+        }),
       };
     } catch {}
   }
-  return { title: "Sao kê cá nhân | Split Money Pro" };
+  return {
+    title: `${translate(dict, "billPage.meta.title")} | ${translate(dict, "common.appName")}`,
+  };
 }
 
 export default async function BillPage({ searchParams }: BillPageProps) {
-  const { data } = await searchParams;
+  const hdrs = await headers();
+  const locale = getLocaleFromHeaders(hdrs.get("accept-language"));
+  const dict = locale === "en" ? en : vi;
+  const { data, d } = await searchParams;
 
   let memberData: IMemberBillDetail | null = null;
   let generatedAt = "";
 
-  if (data) {
+  if (d) {
+    const decoded = decodeBillSharePayload(d);
+    if (decoded) {
+      memberData = decoded.memberDetail;
+      generatedAt = decoded.generatedAt;
+    }
+  } else if (data) {
     try {
       const decodedStr = decodeURIComponent(escape(atob(data)));
       const decoded = JSON.parse(decodedStr) as {
@@ -56,13 +120,17 @@ export default async function BillPage({ searchParams }: BillPageProps) {
           className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           <Receipt className="h-4 w-4" />
-          <span className="font-semibold text-foreground">Split Money Pro</span>
+          <span className="font-semibold text-foreground">
+            {translate(dict, "common.appName")}
+          </span>
         </Link>
         {memberData && (
           <>
             <span className="text-muted-foreground">/</span>
             <span className="text-sm font-medium truncate max-w-[200px]">
-              Sao kê: {memberData.memberName}
+              {translate(dict, "billPage.statementLabel", {
+                name: memberData.memberName,
+              })}
             </span>
           </>
         )}
@@ -77,17 +145,18 @@ export default async function BillPage({ searchParams }: BillPageProps) {
               <Receipt className="h-10 w-10 text-muted-foreground" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold">Không tìm thấy sao kê</h2>
+              <h2 className="text-lg font-semibold">
+                {translate(dict, "billPage.notFoundTitle")}
+              </h2>
               <p className="text-sm text-muted-foreground mt-1 max-w-xs">
-                Link này không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu người
-                chia sẻ link mới.
+                {translate(dict, "billPage.notFoundDescription")}
               </p>
             </div>
             <Link
               href="/"
               className="mt-2 text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
             >
-              ← Về trang chủ
+              {translate(dict, "billPage.backHome")}
             </Link>
           </div>
         )}

@@ -37,6 +37,13 @@
       "en": "Tiếng Anh"
     }
   },
+  "share": {
+    "title": "Sao kê của {{name}}",
+    "description": "Xem sao kê chi tiết của {{name}} từ Split Money",
+    "copyLink": "Sao chép link",
+    "copied": "Đã sao chép!",
+    "shareBtn": "Chia sẻ"
+  },
   "members": {
     "title": "Thành viên",
     "placeholder": "Nhập tên thành viên...",
@@ -158,5 +165,21 @@
     "balanceNegativeHint": "Bạn đang nợ nhóm",
     "footerSlug": "splitmooney.app",
     "footerThanks": "Cảm ơn bạn đã dùng Split Money"
+  },
+  "billModal": {
+    "title": "Sao kê của {{name}}",
+    "loadingTitle": "Đang tải...",
+    "loadingText": "Đang tải sao kê..."
+  },
+  "billPage": {
+    "statementLabel": "Sao kê: {{name}}",
+    "notFoundTitle": "Không tìm thấy sao kê",
+    "notFoundDescription": "Link này không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu người chia sẻ link mới.",
+    "backHome": "← Về trang chủ",
+    "meta": {
+      "title": "Sao kê cá nhân",
+      "titleWithName": "Sao kê của {{name}}",
+      "descriptionWithName": "Chi tiết khoản chi của {{name}}"
+    }
   }
 }

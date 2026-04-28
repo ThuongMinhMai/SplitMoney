@@ -9,33 +9,50 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useI18n } from "@/context/i18n-context";
+import { decodeBillSharePayload } from "@/lib/bill-share-link";
 import { Receipt } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface IInterceptedModalPageProps {
-  searchParams: Promise<{ data?: string }>;
+  searchParams: Promise<{ data?: string; d?: string }>;
 }
 
 export default function InterceptedBillModal({
   searchParams,
 }: IInterceptedModalPageProps) {
   const router = useRouter();
+  const { t } = useI18n();
   const [memberData, setMemberData] = useState<IMemberBillDetail | null>(null);
   const [open, setOpen] = useState(true);
   const [generatedAt, setGeneratedAt] = useState<string>("");
 
   useEffect(() => {
-    searchParams.then(({ data }) => {
-      if (!data) return;
+    searchParams.then(({ data, d }) => {
+      const compressedData = d;
+      if (!compressedData && !data) return;
       try {
-        const decodedStr = decodeURIComponent(escape(atob(data)));
-        const decoded = JSON.parse(decodedStr) as {
-          memberDetail: IMemberBillDetail;
-          generatedAt: string;
-        };
-        setMemberData(decoded.memberDetail);
-        setGeneratedAt(decoded.generatedAt);
+        if (compressedData) {
+          const decoded = decodeBillSharePayload(compressedData);
+          if (!decoded) {
+            router.back();
+            return;
+          }
+          setMemberData(decoded.memberDetail);
+          setGeneratedAt(decoded.generatedAt);
+          return;
+        }
+
+        if (data) {
+          const decodedStr = decodeURIComponent(escape(atob(data)));
+          const decoded = JSON.parse(decodedStr) as {
+            memberDetail: IMemberBillDetail;
+            generatedAt: string;
+          };
+          setMemberData(decoded.memberDetail);
+          setGeneratedAt(decoded.generatedAt);
+        }
       } catch {
         router.back();
       }
@@ -55,7 +72,9 @@ export default function InterceptedBillModal({
       >
         <DialogHeader className="sr-only">
           <DialogTitle>
-            {memberData ? `Sao kê của ${memberData.memberName}` : "Đang tải..."}
+            {memberData
+              ? t("billModal.title", { name: memberData.memberName })
+              : t("billModal.loadingTitle")}
           </DialogTitle>
         </DialogHeader>
 
@@ -67,7 +86,7 @@ export default function InterceptedBillModal({
         ) : (
           <div className="flex flex-col items-center justify-center py-16 gap-3 text-muted-foreground">
             <Receipt className="h-8 w-8 animate-pulse" />
-            <p className="text-sm">Đang tải sao kê...</p>
+            <p className="text-sm">{t("billModal.loadingText")}</p>
           </div>
         )}
       </DialogContent>

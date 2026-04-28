@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/context/i18n-context";
+import { encodeBillSharePayload } from "@/lib/bill-share-link";
 import { ChevronDown, ChevronUp, Eye, Receipt, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar } from "../Avatar";
@@ -29,7 +30,7 @@ export function MemberRow({ member, isExpanded, onToggle }: MemberRowProps) {
 
   const handleViewBill = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const dataString = JSON.stringify({
+    const payload = {
       memberDetail: member,
       generatedAt: new Date().toLocaleDateString("vi-VN", {
         day: "2-digit",
@@ -38,11 +39,9 @@ export function MemberRow({ member, isExpanded, onToggle }: MemberRowProps) {
         hour: "2-digit",
         minute: "2-digit",
       }),
-    });
-
-    // safe btoa for unicode
-    const data = btoa(unescape(encodeURIComponent(dataString)));
-    router.push(`/member/${member.memberId}/bill?data=${data}`);
+    };
+    const d = encodeBillSharePayload(payload);
+    router.push(`/member/${member.memberId}/bill?d=${d}`);
   };
 
   return (
