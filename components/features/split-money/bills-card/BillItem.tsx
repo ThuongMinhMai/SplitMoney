@@ -22,7 +22,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import type { IBill, IMember } from "../types";
-import { formatMoney, getBillIcon } from "../utils";
+import { formatMoneyFull, getBillIcon } from "../utils";
+// import { formatMoney, getBillIcon } from "../utils";
 
 const iconMap = {
   Coffee: Coffee,
@@ -59,14 +60,15 @@ export function BillItem({ bill, members, onRemove, t }: IBillItemProps) {
         </div>
         <div className="flex items-center gap-1 shrink-0">
           <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-sm">
-            {formatMoney(bill.totalAmount)}
+            {/* {formatMoney(bill.totalAmount)} */}
+            {formatMoneyFull(bill.totalAmount)}
           </span>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-6 w-6 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all"
+                className="h-6 w-6 text-destructive bg-destructive/10 transition-all"
               >
                 <Trash2 className="h-3 w-3" />
               </Button>

@@ -10,9 +10,10 @@ import type {
   IMemberSummary,
   ITransaction,
 } from "@/components/features/split-money/types";
-import { formatMoney } from "@/components/features/split-money/utils";
+// import { formatMoney } from "@/components/features/split-money/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Banknote, ReceiptText, UserRound } from "lucide-react";
+import { formatMoneyFull } from "../utils";
 
 interface IHomeMainContentProps {
   t: (key: string) => string;
@@ -49,7 +50,7 @@ export function HomeMainContent({
       >
         <StatCard
           label={t("common.totalSpent")}
-          value={formatMoney(totalSpent)}
+          value={formatMoneyFull(totalSpent)}
           valueClass="text-emerald-700 dark:text-emerald-400"
           icon={<Banknote className="h-5 w-5" />}
         />

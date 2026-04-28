@@ -40,7 +40,7 @@ export function AddBillForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="space-y-6 px-1">
+      <form onSubmit={onSubmit} className="space-y-6 p-2">
         <BillInfoFields members={members} />
         <ParticipantsField members={members} />
         <SplitTypeField />

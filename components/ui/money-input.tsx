@@ -1,14 +1,22 @@
 import * as React from "react";
 import { CustomInput } from "./custom-input";
-import { formatNumberWithCommas, parseFormattedNumber } from "@/components/features/split-money/utils";
+import {
+  formatCurrencyVN,
+  parseFormattedNumber,
+} from "@/components/features/split-money/utils";
 
-interface MoneyInputProps extends Omit<React.ComponentProps<typeof CustomInput>, "onChange" | "value"> {
+interface MoneyInputProps extends Omit<
+  React.ComponentProps<typeof CustomInput>,
+  "onChange" | "value"
+> {
   value: number;
   onChange: (value: number) => void;
 }
 
 export function MoneyInput({ value, onChange, ...props }: MoneyInputProps) {
-  const [displayValue, setDisplayValue] = React.useState(value > 0 ? formatNumberWithCommas(value.toString()) : "");
+  const [displayValue, setDisplayValue] = React.useState(
+    value > 0 ? formatCurrencyVN(value.toString()) : "",
+  );
 
   React.useEffect(() => {
     if (value === 0) {
@@ -16,22 +24,22 @@ export function MoneyInput({ value, onChange, ...props }: MoneyInputProps) {
     } else {
       const parsedDisplay = parseFormattedNumber(displayValue);
       if (parsedDisplay !== value) {
-        setDisplayValue(formatNumberWithCommas(value.toString()));
+        setDisplayValue(formatCurrencyVN(value.toString()));
       }
     }
   }, [value]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/[^0-9]/g, ""); // Allow only digits
+    const rawValue = e.target.value.replace(/[^0-9]/g, "");
     if (rawValue === "") {
       setDisplayValue("");
       onChange(0);
       return;
     }
-    
+
     const numValue = parseInt(rawValue, 10);
     if (!isNaN(numValue)) {
-      setDisplayValue(formatNumberWithCommas(rawValue));
+      setDisplayValue(formatCurrencyVN(rawValue));
       onChange(numValue);
     }
   };

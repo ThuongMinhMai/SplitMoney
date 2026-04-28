@@ -19,7 +19,22 @@
     "confirmExit": "Exit form?",
     "unsavedChanges": "You have unsaved changes. If you leave, your data will be lost.",
     "deleteConfirmDesc": "This action cannot be undone. This data will be permanently deleted.",
-    "member": "member"
+    "member": "member",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All"
+  },
+  "settings": {
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System",
+      "toggle": "Toggle theme"
+    },
+    "language": {
+      "toggle": "Toggle language",
+      "vi": "Vietnamese",
+      "en": "English"
+    }
   },
   "members": {
     "title": "Members",
@@ -40,7 +55,10 @@
       "amountPositive": "Amount must be greater than 0",
       "payerRequired": "Please select a payer",
       "participantsRequired": "Please select at least one participant",
-      "totalDiff": "Sum of participant shares must equal total amount"
+      "totalDiff": "Sum of shares ({{current}}) must equal total amount ({{total}})",
+      "amountMissing": "{{amount}} remaining",
+      "amountExcess": "{{amount}} over limit",
+      "amountRequired": "Please enter an amount for all participants"
     },
     "title": "Add New Bill",
     "noBills": "No bills yet",
@@ -76,11 +94,13 @@
     "owed": "Owed"
   },
   "transactions": {
+    "title":"Transaction",
     "count": "transactions",
     "noTransactions": "No transactions",
     "allSettled": "All bills are settled!"
   },
   "tour": {
+    "quickGuide":"Quick Guide",
     "welcome": "Welcome!",
     "welcomeDesc": "Let me guide you through the fastest way to use the Split Money app.",
     "addMember": "Add Members",
@@ -97,7 +117,8 @@
     "settingsDesc": "You can change the language or switch to dark mode here.",
     "next": "Next",
     "prev": "Back",
-    "done": "Done"
+    "done": "Done",
+    "step":"Step"
   },
   "details": {
     "title": "Member Details",

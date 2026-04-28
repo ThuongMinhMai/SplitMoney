@@ -12,12 +12,12 @@ export function getInitials(name: string) {
     .slice(0, 2);
 }
 
-export function formatMoney(amount: number) {
-  if (amount >= 1_000_000)
-    return (amount / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M₫";
-  if (amount >= 1_000) return Math.round(amount / 1_000) + "K₫";
-  return Math.round(amount).toLocaleString("vi-VN") + "₫";
-}
+// export function formatMoney(amount: number) {
+//   if (amount >= 1_000_000)
+//     return (amount / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M₫";
+//   if (amount >= 1_000) return Math.round(amount / 1_000) + "K₫";
+//   return Math.round(amount).toLocaleString("vi-VN") + "₫";
+// }
 
 export function formatMoneyFull(amount: number) {
   return new Intl.NumberFormat("vi-VN", {
@@ -29,12 +29,15 @@ export function formatMoneyFull(amount: number) {
 }
 
 // Format number with commas
-export function formatNumberWithCommas(value: string | number): string {
+export function formatCurrencyVN(value: number | string): string {
+  // Chuyển về kiểu number
   const num =
-    typeof value === "string" ? value.replace(/,/g, "") : value.toString();
-  const parts = num.split(".");
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return parts.join(".");
+    typeof value === "string" ? Number(value.replace(/[^0-9.-]+/g, "")) : value;
+
+  if (isNaN(num)) return "0";
+
+  // Sử dụng locale 'vi-VN'
+  return new Intl.NumberFormat("vi-VN").format(num);
 }
 
 // Parse formatted number back to number

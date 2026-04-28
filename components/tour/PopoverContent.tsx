@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
-interface PopoverContentProps {
+interface IPopoverContentProps {
   title?: string;
   description?: string;
   stepIndex: number;
@@ -25,7 +25,7 @@ export function PopoverContent({
   onClose,
   onPrev,
   onNext,
-}: PopoverContentProps) {
+}: IPopoverContentProps) {
   return (
     <div className="p-5 w-full h-full bg-background border border-border/50 rounded-2xl shadow-2xl flex flex-col animate-in fade-in zoom-in duration-300">
       {/* Header */}
@@ -34,7 +34,7 @@ export function PopoverContent({
           <div className="flex items-center gap-2 mb-1">
             <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-tighter">
-              Quick Guide
+              {t("tour.quickGuide")}
             </span>
           </div>
           <h3 className="font-bold text-lg leading-none tracking-tight text-foreground">
@@ -59,7 +59,7 @@ export function PopoverContent({
       <div className="flex items-center justify-between mt-auto pt-3 border-t border-border/40">
         <div className="flex flex-col gap-1">
           <div className="text-[10px] font-medium text-muted-foreground/60 uppercase tracking-widest">
-            Step {stepIndex + 1} / {totalSteps}
+            {t("tour.step")} {stepIndex + 1} / {totalSteps}
           </div>
           <div className="flex gap-0.5">
             {Array.from({ length: totalSteps }).map((_, i) => (

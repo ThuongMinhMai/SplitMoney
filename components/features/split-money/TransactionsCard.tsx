@@ -4,7 +4,8 @@ import { CardCustom } from "@/components/ui/card-custom";
 import { useI18n } from "@/context/i18n-context";
 import { ArrowRight, CheckCircle2, Wallet } from "lucide-react";
 import type { ITransaction } from "./types";
-import { formatMoney } from "./utils";
+import { formatMoneyFull } from "./utils";
+// import { formatMoney } from "./utils";
 interface ITransactionsCardProps {
   transactions: ITransaction[];
 }
@@ -58,7 +59,8 @@ export function TransactionsCard({ transactions }: ITransactionsCardProps) {
                   </Badge>
                 </div>
                 <span className="font-mono font-bold text-sm shrink-0 bg-emerald-50 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-3 py-1.5 rounded-lg border border-emerald-200 dark:border-emerald-500/30 shadow-sm">
-                  {formatMoney(tx.amount)}
+                  {formatMoneyFull(tx.amount)}
+                  {/* {formatMoney(tx.amount)} */}
                 </span>
               </div>
             ))}

@@ -13,7 +13,8 @@ import { cn } from "@/lib/utils";
 import { BarChart3, TrendingUp } from "lucide-react";
 import { Avatar } from "./Avatar";
 import type { IMemberSummary } from "./types";
-import { formatMoney } from "./utils";
+import { formatMoneyFull } from "./utils";
+// import { formatMoney } from "./utils";
 
 interface SummaryCardProps {
   summaries: IMemberSummary[];
@@ -70,10 +71,10 @@ export function SummaryCard({ summaries, hasBills }: SummaryCardProps) {
                       </div>
                     </TableCell>
                     <TableCell className="text-right font-mono text-sm text-emerald-700 py-2.5 font-semibold">
-                      {formatMoney(s.paid)}
+                      {formatMoneyFull(s.paid)}
                     </TableCell>
                     <TableCell className="text-right font-mono text-sm text-rose-600 py-2.5 font-semibold">
-                      {formatMoney(s.used)}
+                      {formatMoneyFull(s.used)}
                     </TableCell>
                     <TableCell className="text-right py-2.5">
                       <span
@@ -85,7 +86,7 @@ export function SummaryCard({ summaries, hasBills }: SummaryCardProps) {
                         )}
                       >
                         {s.balance >= 0 ? "+" : ""}
-                        {formatMoney(s.balance)}
+                        {formatMoneyFull(s.balance)}
                       </span>
                     </TableCell>
                   </TableRow>

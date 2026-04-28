@@ -91,7 +91,7 @@ export function MembersCard({
             <p className="text-xs">{t("members.addHint")}</p>
           </div>
         ) : (
-          <ScrollArea className="max-h-52">
+          <div className="max-h-52 overflow-y-auto pr-2 custom-scrollbar">
             <div className="space-y-1.5 pr-3">
               {members.map((m) => (
                 <MemberListItem
@@ -102,7 +102,7 @@ export function MembersCard({
                 />
               ))}
             </div>
-          </ScrollArea>
+          </div>
         )}
       </CardContent>
     </CardCustom>

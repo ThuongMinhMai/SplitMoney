@@ -19,7 +19,22 @@
     "confirmExit": "Thoát form?",
     "unsavedChanges": "Bạn có thay đổi chưa lưu. Nếu rời đi, dữ liệu sẽ bị mất.",
     "deleteConfirmDesc": "Hành động này không thể hoàn tác. Dữ liệu sẽ bị xóa vĩnh viễn.",
-    "member": "thành viên"
+    "member": "thành viên",
+    "selectAll": "Chọn tất cả",
+    "deselectAll": "Bỏ chọn tất cả"
+  },
+  "settings": {
+    "theme": {
+      "light": "Sáng",
+      "dark": "Tối",
+      "system": "Hệ thống",
+      "toggle": "Thay đổi giao diện"
+    },
+    "language": {
+      "toggle": "Thay đổi ngôn ngữ",
+      "vi": "Tiếng Việt",
+      "en": "Tiếng Anh"
+    }
   },
   "members": {
     "title": "Thành viên",
@@ -40,14 +55,17 @@
       "amountPositive": "Số tiền phải lớn hơn 0",
       "payerRequired": "Vui lòng chọn người trả",
       "participantsRequired": "Vui lòng chọn ít nhất một người tham gia",
-      "totalDiff": "Tổng phần chia phải bằng tổng số tiền"
+      "totalDiff": "Tổng tiền chia lẻ ({{current}}) phải bằng tổng hóa đơn ({{total}})",
+      "amountMissing": "Còn thiếu {{amount}}",
+      "amountExcess": "Đang thừa {{amount}}",
+      "amountRequired": "Vui lòng nhập số tiền cho tất cả người tham gia"
     },
     "title": "Thêm hóa đơn mới",
     "noBills": "Chưa có hóa đơn",
     "addHint": "Thêm hóa đơn để bắt đầu",
     "name": "Tên hóa đơn",
     "namePlaceholder": "Vd: Ăn tối, Cafe, Taxi...",
-    "totalAmount": "Tổng số tiền (VND)",
+    "totalAmount": "Tổng số tiền (đ)",
     "paidBy": "Người trả",
     "selectPayer": "Chọn người trả",
     "participants": "Người tham gia",
@@ -76,11 +94,13 @@
     "owed": "Được nợ"
   },
   "transactions": {
+    "title":"Giao dịch",
     "count": "giao dịch",
     "noTransactions": "Không có giao dịch",
     "allSettled": "Tất cả hóa đơn đã được thanh toán!"
   },
   "tour": {
+    "quickGuide":"Hướng dẫn nhanh",
     "welcome": "Chào mừng!",
     "welcomeDesc": "Hãy để tôi hướng dẫn bạn cách sử dụng Split Money nhanh nhất.",
     "addMember": "Thêm thành viên",
@@ -97,7 +117,8 @@
     "settingsDesc": "Bạn có thể thay đổi ngôn ngữ hoặc chuyển sang chế độ tối tại đây.",
     "next": "Tiếp theo",
     "prev": "Quay lại",
-    "done": "Xong"
+    "done": "Xong",
+     "step":"Bước"
   },
   "details": {
     "title": "Chi tiết thành viên",

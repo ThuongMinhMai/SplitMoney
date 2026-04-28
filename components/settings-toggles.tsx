@@ -13,6 +13,7 @@ import { useTheme } from "next-themes";
 
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme();
+  const { t } = useI18n();
 
   return (
     <DropdownMenu modal={false}>
@@ -20,7 +21,7 @@ export function ThemeToggle() {
         <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl">
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
+          <span className="sr-only">{t("settings.theme.toggle")}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -28,21 +29,21 @@ export function ThemeToggle() {
           onClick={() => setTheme("light")}
           className="cursor-pointer"
         >
-          Light
+          {t("settings.theme.light")}
           {theme === "light" && <Check className="ml-auto h-4 w-4" />}
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setTheme("dark")}
           className="cursor-pointer"
         >
-          Dark
+          {t("settings.theme.dark")}
           {theme === "dark" && <Check className="ml-auto h-4 w-4" />}
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setTheme("system")}
           className="cursor-pointer"
         >
-          System
+          {t("settings.theme.system")}
           {theme === "system" && <Check className="ml-auto h-4 w-4" />}
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -51,11 +52,11 @@ export function ThemeToggle() {
 }
 
 export function LanguageToggle() {
-  const { language, setLanguage } = useI18n();
+  const { language, setLanguage, t } = useI18n();
 
   const languages = [
-    { code: "vi", label: "Tiếng Việt", flag: "🇻🇳" },
-    { code: "en", label: "English", flag: "🇺🇸" },
+    { code: "vi", label: t("settings.language.vi"), flag: "🇻🇳" },
+    { code: "en", label: t("settings.language.en"), flag: "🇺🇸" },
   ];
 
   return (
@@ -67,14 +68,13 @@ export function LanguageToggle() {
           className="h-9 w-9 rounded-xl relative"
         >
           <Languages className="h-[1.2rem] w-[1.2rem]" />
-          {/* Badge nhỏ hiển thị cờ hiện tại ở góc nút (tùy chọn) */}
           <span className="absolute -top-1 -right-1 text-[10px]">
             {language === "vi" ? "🇻🇳" : "🇺🇸"}
           </span>
-          <span className="sr-only">Toggle language</span>
+          <span className="sr-only">{t("settings.language.toggle")}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
+      <DropdownMenuContent align="end" className="w-[170px]">
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}

@@ -9,6 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 
@@ -31,6 +32,7 @@ export function HomeHeader({
   isFormDirty,
   setIsFormDirty,
 }: IHomeHeaderProps) {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   return (
     <header className="fixed top-0 left-0 right-0 z-40 border-b backdrop-blur-md shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
@@ -82,8 +84,12 @@ export function HomeHeader({
             </Button>
           </SheetTrigger>
           <SheetContent
-            side="bottom"
-            className="rounded-t-2xl max-h-[92dvh] overflow-y-auto p-4 pb-safe bg-background border-t-4 border-t-emerald-500"
+            side={isDesktop ? "right" : "bottom"}
+            className={`rounded-t-2xl p-4 pb-safe bg-background overflow-y-auto transition-all ${
+              isDesktop
+                ? "w-[400px] sm:w-[540px] border-l"
+                : "max-h-[92dvh] border-t-4 border-t-emerald-500"
+            }`}
             onPointerDownOutside={(e) => {
               if (isFormDirty) e.preventDefault();
             }}

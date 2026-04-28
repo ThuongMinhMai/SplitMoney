@@ -99,6 +99,48 @@
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px; /* Độ rộng của thanh cuộn dọc */
+    height: 6px; /* Độ cao của thanh cuộn ngang */
+  }
+
+  /* Phần đường ray (track) bên dưới */
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Phần tay kéo (thumb) */
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    /* Màu sắc ở chế độ sáng */
+    background-color: rgba(0, 0, 0, 0.1); 
+    transition: background-color 0.2s ease;
+  }
+
+  /* Hiệu ứng khi hover vào tay kéo */
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  /* Cấu hình cho Chế độ tối (Dark Mode) */
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    /* Màu sắc ở chế độ tối */
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Hỗ trợ cho Firefox (Firefox sử dụng thuộc tính khác) */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+  }
+
+  .dark .custom-scrollbar {
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  }
 }
 
 @layer utilities {

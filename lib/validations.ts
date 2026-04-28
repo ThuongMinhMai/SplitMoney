@@ -22,12 +22,29 @@ export const billSchema = z
   })
   .refine(
     (data) => {
+      if (data.splitType === "custom") {
+        if (!data.customAmounts) return false;
+        // Kiểm tra tất cả người tham gia phải có số tiền > 0
+        return data.participants.every(
+          (pid) => (data.customAmounts?.[pid] || 0) > 0,
+        );
+      }
+      return true;
+    },
+    {
+      message: "bills.error.amountRequired", // Lỗi: Vui lòng nhập số tiền cho tất cả thành viên
+      path: ["customAmounts"],
+    },
+  )
+  // Refine 2: Kiểm tra tổng số tiền có khớp không
+  .refine(
+    (data) => {
       if (data.splitType === "custom" && data.customAmounts) {
-        const totalCustom = Object.values(data.customAmounts).reduce(
-          (a, b) => a + b,
+        const totalCustom = data.participants.reduce(
+          (sum, pid) => sum + (data.customAmounts?.[pid] || 0),
           0,
         );
-        return Math.abs(totalCustom - data.totalAmount) < 1; // Allowance for floating point
+        return Math.abs(totalCustom - data.totalAmount) < 1;
       }
       return true;
     },
