@@ -81,7 +81,7 @@ export function PopoverContent({
               onClick={onClose}
               className="h-8 text-xs font-medium px-3"
             >
-              Skip
+              {t("tour.skip")}
             </Button>
           ) : (
             <Button

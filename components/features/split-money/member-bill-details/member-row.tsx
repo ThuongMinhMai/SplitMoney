@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/context/i18n-context";
 import { encodeBillSharePayload } from "@/lib/bill-share-link";
-import { ChevronDown, ChevronUp, Eye, Receipt, User } from "lucide-react";
+import { ChevronDown, ChevronUp, Eye, Receipt } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar } from "../Avatar";
 import type { IMemberBillDetail } from "../types";
@@ -115,7 +115,7 @@ export function MemberRow({ member, isExpanded, onToggle }: MemberRowProps) {
             <div>
               <h4 className="text-sm font-semibold flex items-center gap-2 mb-3">
                 <div className="p-0.5 rounded bg-amber-100 dark:bg-amber-500/10">
-                  <User className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+                  <Receipt className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
                 </div>
                 {t("details.usedItems")}
               </h4>

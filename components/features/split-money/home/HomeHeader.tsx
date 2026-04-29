@@ -103,7 +103,7 @@ export function HomeHeader({
               if (isFormDirty) e.preventDefault();
             }}
           >
-            <SheetHeader className="mb-5">
+            <SheetHeader>
               <SheetTitle className="text-left text-xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-800 bg-clip-text text-transparent">
                 {t(isEditing ? "bills.editTitle" : "bills.title")}
               </SheetTitle>

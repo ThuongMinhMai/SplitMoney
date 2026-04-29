@@ -128,7 +128,8 @@
     "next": "Next",
     "prev": "Back",
     "done": "Done",
-    "step":"Step"
+    "step":"Step",
+    "skip":"Skip"
   },
   "details": {
     "title": "Member Details",

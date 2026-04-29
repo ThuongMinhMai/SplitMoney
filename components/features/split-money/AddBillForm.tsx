@@ -30,10 +30,14 @@ export function AddBillForm({
   const { t } = useI18n();
   const isEditing = Boolean(initialBill);
 
-  const { form, onSubmit } = useAddBillForm((data) => {
-    onAdd(data);
-    toast.success(t(isEditing ? "bills.updated" : "bills.added"));
-  }, onClose, initialBill);
+  const { form, onSubmit } = useAddBillForm(
+    (data) => {
+      onAdd(data);
+      toast.success(t(isEditing ? "bills.updated" : "bills.added"));
+    },
+    onClose,
+    initialBill,
+  );
 
   const isDirty = form.formState.isDirty;
 
@@ -43,7 +47,7 @@ export function AddBillForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="space-y-6 p-2">
+      <form onSubmit={onSubmit} className="space-y-6 px-2 pb-4">
         <BillInfoFields members={members} />
         <ParticipantsField members={members} />
         <SplitTypeField />

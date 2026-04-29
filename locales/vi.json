@@ -1,7 +1,7 @@
 {
   "common": {
     "appName": "Split Money Pro",
-    "tagline": "Chia tiền thông minh",
+    "tagline": "Chúng ta chả biết gì",
     "addBill": "Thêm hóa đơn",
     "cancel": "Hủy",
     "confirm": "Xác nhận",
@@ -17,7 +17,7 @@
     "success": "Thành công",
     "error": "Lỗi",
     "confirmDelete": "Xác nhận xóa?",
-    "confirmExit": "Thoát form?",
+    "confirmExit": "Thoát biểu mẫu?",
     "unsavedChanges": "Bạn có thay đổi chưa lưu. Nếu rời đi, dữ liệu sẽ bị mất.",
     "deleteConfirmDesc": "Hành động này không thể hoàn tác. Dữ liệu sẽ bị xóa vĩnh viễn.",
     "member": "thành viên",
@@ -128,7 +128,8 @@
     "next": "Tiếp theo",
     "prev": "Quay lại",
     "done": "Xong",
-     "step":"Bước"
+    "step":"Bước",
+    "skip":"Bỏ qua"
   },
   "details": {
     "title": "Chi tiết thành viên",
